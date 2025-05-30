@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Startkort</title>
+    <link rel="icon" type="image/x-icon" href="img/hollyrosa-square.png">
+    <meta charset="utf-8" />
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.5.3/papaparse.min.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/simplestorage.js@0.2.1/simpleStorage.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        #grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+        }
+
+        .box {
+            padding: 10px;
+            text-align: center;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .red {
+            background-color: red;
+            color: white;
+        }
+
+        .gray {
+            background-color: lightgray;
+            color: darkgray;
+            cursor: pointer;
+        }
+
+        .editable {
+            border: 2px dashed white;
+            cursor: pointer;
+        }
+
+        button#flushButton {
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Startkort</h1>
+    <h2>Registrera kontroller</h2>
+    <form id="form" method="post">
+        <label for="number">Kontrollnummer:</label><br>
+        <input type="number" id="number" placeholder="Kontrollens nummer" required autocomplete="off"><br><br>
+        <label for="code">Kod:</label><br>
+        <input type="text" id="code" placeholder="Koden på kontrollen" required autocomplete="off"><br><br>
+        <button type="submit">Skicka in</button>
+    </form>
+
+    <h2>Funna kontroller</h2>
+
+    <p>
+        ✅ Rätt: <span id="correctCount">0</span>
+        ❌ Fel: <span id="incorrectCount">0</span>
+        🕵️ Ej hittade: <span id="notFoundCount">?</span>
+    </p>
+
+    <div id="grid"></div>
+
+    <button id="flushButton" style="margin-top: 20px; background-color: darkred; color: white; padding: 10px;">
+        Radera alla registreringar
+    </button>
+
+    <script>
+        let storage = simpleStorage;
+        let totalControls = 0;
+        let editingNumber = null;
+
+        fetch("data/alla.csv")
+            .then(response => response.text())
+            .then(csv => {
+                const results = Papa.parse(csv, { header: false, skipEmptyLines: true });
+                totalControls = results.data.length;
+                loadGrid();
+            });
+
+        const loadGrid = () => {
+            const savedData = storage.get("gridData") || [];
+            savedData.sort((a, b) => a.number - b.number);
+            const grid = document.getElementById("grid");
+            grid.innerHTML = "";
+
+            let correct = 0;
+            let incorrect = 0;
+
+            savedData.forEach(element => {
+                const div = document.createElement("div");
+                div.classList.add("box", element.correct ? "green" : "red");
+                div.textContent = element.number;
+                div.dataset.number = element.number;
+                div.dataset.correct = element.correct;
+                if (!element.correct) {
+                    div.classList.add("editable");
+                    div.addEventListener("click", editRedBox);
+                }
+                grid.appendChild(div);
+
+                if (element.correct) correct++;
+                else incorrect++;
+            });
+
+            document.getElementById("correctCount").textContent = correct;
+            document.getElementById("incorrectCount").textContent = incorrect;
+
+            if (totalControls > 0) {
+                const notFound = totalControls - (correct + incorrect);
+                document.getElementById("notFoundCount").textContent = notFound;
+            } else {
+                document.getElementById("notFoundCount").textContent = "?";
+            }
+        };
+
+
+        const saveGrid = (data) => {
+            storage.set("gridData", data);
+        };
+
+        const checkCsvData = (number, code, callback) => {
+            fetch("data/alla.csv")
+                .then(response => response.text())
+                .then(csv => {
+                    const results = Papa.parse(csv, { header: false, skipEmptyLines: true });
+                    const row = results.data.find(row =>
+                        row[0] == number && row[1].trim().toLowerCase() === code.trim().toLowerCase()
+                    );
+                    callback(row ? true : false);
+                });
+        };
+
+        document.getElementById("form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const number = document.getElementById("number").value;
+            const code = document.getElementById("code").value;
+
+            const gridData = storage.get("gridData") || [];
+
+            if (editingNumber !== null) {
+                checkCsvData(number, code, (isCorrect) => {
+                    if (isCorrect) {
+                        storage.set(number, true);
+                        updateGridData(number, true, code);
+                        editingNumber = null;
+                        document.getElementById("form").reset();
+                        document.getElementById("number").readOnly = false;
+                        loadGrid();
+                    } else {
+                        alert("Koden är felaktig!");
+                    }
+                });
+            } else {
+                const existingNumber = gridData.find(data => data.number == number);
+                if (existingNumber) {
+                    document.getElementById("form").reset();
+                    return;
+                }
+
+                if (storage.get(number)) {
+                    addToGrid(number, true, code);
+                } else {
+                    checkCsvData(number, code, (isCorrect) => {
+                        if (isCorrect) {
+                            storage.set(number, true);
+                            addToGrid(number, true, code);
+                        } else {
+                            addToGrid(number, false, code);
+                        }
+                    });
+                }
+            }
+            document.getElementById("form").reset();
+        });
+
+        const addToGrid = (number, correct, code = "") => {
+            const grid = document.getElementById("grid");
+            const div = document.createElement("div");
+            div.classList.add("box", correct ? "green" : "red");
+            div.textContent = number;
+            div.dataset.number = number;
+            div.dataset.correct = correct;
+
+            if (!correct) {
+                div.classList.add("editable");
+                div.addEventListener("click", editRedBox);
+            }
+
+            grid.appendChild(div);
+            updateGridData(number, correct, code);
+            loadGrid();
+        };
+
+        const editRedBox = (e) => {
+            const box = e.target;
+            const number = box.dataset.number;
+            const savedData = storage.get("gridData") || [];
+            const item = savedData.find(d => d.number == number);
+
+            document.getElementById("number").value = number;
+            document.getElementById("number").readOnly = true;
+            document.getElementById("code").value = item?.code || "";
+            document.getElementById("code").focus();
+            editingNumber = number;
+        };
+
+        const updateGridData = (number, correct, code = "") => {
+            const savedData = storage.get("gridData") || [];
+            const index = savedData.findIndex(item => item.number == number);
+            if (index !== -1) {
+                savedData[index].correct = correct;
+                savedData[index].code = code;
+            } else {
+                savedData.push({ number, correct, code });
+            }
+            saveGrid(savedData);
+        };
+
+        document.getElementById("flushButton").addEventListener("click", function () {
+            if (confirm("Är du säker på att du vill rensa all data?")) {
+                storage.flush();
+                editingNumber = null;
+                document.getElementById("form").reset();
+                document.getElementById("number").readOnly = false;
+                loadGrid();
+            }
+        });
+
+        loadGrid();
+    </script>
+</body>
+
+</html>
