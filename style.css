@@ -127,8 +127,8 @@ button {
 }
 
 .progress {
-    color: white;
     padding: 10px;
+    color: white;
     text-align: center;
     font-size: 1.2em;
     border-radius: 10px;
