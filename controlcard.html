@@ -113,11 +113,12 @@
                         if (found.code.toLowerCase() === code.toLowerCase()) {
                             cell.classList.add("green");
                             correct++;
+                            cell.textContent = number + ": " + code.toUpperCase();
                         } else {
                             cell.classList.add("red");
                             incorrect++;
+                            cell.textContent = number;
                         }
-                        cell.textContent = number + ": " + found.toUpperCase();
                     } else {
                         cell.classList.add("gray");
                         cell.textContent = number;
