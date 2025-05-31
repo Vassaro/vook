@@ -1,2 +1,2 @@
 # vook
-Vässarö Orienteringspass
+Startkort till orienteringsleder på Vässarö.
