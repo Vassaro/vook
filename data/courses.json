@@ -93,7 +93,7 @@
         "id": "yellow",
         "name": "Gul vägvalsbana",
         "desc": "",
-        "length": "Ca. 2.5km fv.",
+        "length": "2.5km",
         "numericalorder": false,
         "count": 7,
         "controlpoints": [
