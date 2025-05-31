@@ -68,7 +68,7 @@ button {
     background-color: #ddd;
 }
 
-#grid {
+#controlGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 10px;
@@ -111,6 +111,12 @@ button {
     border: 1px solid #ccc;
     margin-top: 20px;
     border-radius: 10px;
+}
+
+#progressGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
 }
 
 .progress {

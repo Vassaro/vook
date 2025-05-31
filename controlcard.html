@@ -21,8 +21,7 @@
 
     <hr>
 
-    <h1>Startkort</h1>
-    <h2 id="nameOfCourse"></h2>
+    <h1 id="nameOfCourse"></h1>
 
     <hr>
 
@@ -39,7 +38,7 @@
         <button id="popupCancel">Avbryt</button>
     </div>
 
-    <div style="display: block; ">
+    <div id="progressGrid">
         <div class="progress" style="background-color: green; color: white;">
             Rätt: <span id="correctCount">0</span>
         </div>
@@ -53,16 +52,19 @@
 
     <hr>
 
-    <div id="grid"></div>
+    <div id="controlGrid"></div>
 
     <hr>
 
+    <button id="flushButton">
+        Radera alla registreringar
+    </button>
 
     <script>
 
         const storage = simpleStorage;
         const courseID = getCourseID();
-        
+
         function loadCourse(courseID) {
             return storage.get(courseID) || [];
         };
@@ -85,17 +87,17 @@
         async function init() {
             const course = await getCourse(courseID);
             if (!course) {
-                document.body.innerHTML = "<h1>Kursen hittades inte!</h1>";
+                document.body.innerHTML = "<h1>Leden hittades inte!</h1>";
                 return;
             }
 
             if (course.numericalorder) {
-                course.controlpoints.sort((a, b) => a[0]-b[0]);
+                course.controlpoints.sort((a, b) => a[0] - b[0]);
             }
 
             let courseProgress = loadCourse(courseID)
 
-            const grid = document.getElementById("grid");
+            const grid = document.getElementById("controlGrid");
 
             function renderGrid(course, progress) {
                 grid.innerHTML = "";
@@ -106,7 +108,7 @@
                 course.controlpoints.forEach(([number, code]) => {
                     const cell = document.createElement("div");
                     cell.className = "box";
-                    
+
 
                     const found = courseProgress.find(entry => entry.number === number);
                     if (found) {
@@ -136,7 +138,7 @@
                     grid.appendChild(cell);
                 });
 
-                document.getElementById("nameOfCourse").textContent = course.name
+                document.getElementById("nameOfCourse").textContent = "Startkort - " + course.name;
                 document.getElementById("correctCount").textContent = correct;
                 document.getElementById("incorrectCount").textContent = incorrect;
                 document.getElementById("notFoundCount").textContent = course.controlpoints.length - correct - incorrect;
@@ -173,6 +175,7 @@
                 popup.style.display = "none";
                 popupCode.value = "";
                 selectedNumber = null;
+                location.reload();
             });
 
             const infoTable = document.getElementById("courseInfo").querySelector("tbody");
@@ -181,10 +184,22 @@
                 <tr><td>Längd</td><td>${course.length || "-"}</td></tr>
                 <tr><td>Antal kontroller</td><td>${course.count || course.controlpoints.length}</td></tr>
                 `;
+
+            const flushButton = document.getElementById("flushButton");
+            if (!simpleStorage.hasKey(courseID)) {
+                flushButton.style.display = "none";
+            }
+            document.getElementById("flushButton").addEventListener("click", function () {
+                const confirmed = confirm("Är du säker att du vill nollställa den här leden? Alla dina svar kommer raderas.")
+                if (confirmed) {
+                    simpleStorage.deleteKey(courseID);
+                    location.reload();
+                }
+            });
         }
 
         init();
-        
+
     </script>
 </body>
 

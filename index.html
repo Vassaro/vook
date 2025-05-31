@@ -45,9 +45,9 @@
 
     <hr>
 
-    <button id="flushButton" style="margin-top: 20px; background-color: darkred; color: white; padding: 10px;">
+    <!-- <button id="flushButton">
         Radera alla registreringar
-    </button>
+    </button> -->
 
 
     <script>
@@ -156,11 +156,11 @@
 
         document.getElementById("startNewCourse").addEventListener("click", getAllCourses);
 
-        document.getElementById("flushButton").addEventListener("click", function () {
-            storage.flush();
-            showStartedCourses();
-            document.getElementById("availableCourses").innerHTML = "";
-        });
+        // document.getElementById("flushButton").addEventListener("click", function () {
+        //     storage.flush();
+        //     showStartedCourses();
+        //     document.getElementById("availableCourses").innerHTML = "";
+        // });
 
         showStartedCourses();
     </script>
