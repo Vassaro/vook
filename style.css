@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.course {
+    padding: 10px;
+    background-color: #ddd;
+    margin: 5px 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#newCourse {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px dashed #aaa;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 1em;
+}
+
+#flushButton {
+    background-color: darkred;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#startedCourses {
+    border: 1px solid black;
+}
+
+.course {
+    background-color: #eee;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.course:hover {
+    background-color: #ddd;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+
+.box {
+    padding: 10px;
+    text-align: center;
+    color: white;
+    font-size: 1.2em;
+}
+
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: red;
+    color: white;
+}
+
+.gray {
+    background-color: lightgray;
+    color: darkgray;
+    cursor: pointer;
+}
+
+.editable {
+    border: 2px dashed white;
+    cursor: pointer;
+}
+

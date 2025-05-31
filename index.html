@@ -12,243 +12,113 @@
     <script src="https://cdn.jsdelivr.net/npm/simplestorage.js@0.2.1/simpleStorage.min.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-
-        #grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 10px;
-        }
-
-        .box {
-            padding: 10px;
-            text-align: center;
-            color: white;
-            font-size: 1.2em;
-        }
-
-        .green {
-            background-color: green;
-        }
-
-        .red {
-            background-color: red;
-            color: white;
-        }
-
-        .gray {
-            background-color: lightgray;
-            color: darkgray;
-            cursor: pointer;
-        }
-
-        .editable {
-            border: 2px dashed white;
-            cursor: pointer;
-        }
-
-        button#flushButton {
-            border: none;
-            border-radius: 6px;
-            font-size: 1em;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>Startkort</h1>
-    <h2>Registrera kontroller</h2>
-    <form id="form" method="post">
-        <label for="number">Kontrollnummer:</label><br>
-        <input type="number" id="number" placeholder="Kontrollens nummer" required autocomplete="off"><br><br>
-        <label for="code">Kod:</label><br>
-        <input type="text" id="code" placeholder="Koden på kontrollen" required autocomplete="off"><br><br>
-        <button type="submit">Skicka in</button>
-    </form>
-
-    <h2>Funna kontroller</h2>
-
-    <p>
-        ✅ Rätt: <span id="correctCount">0</span>
-        ❌ Fel: <span id="incorrectCount">0</span>
-        🕵️ Ej hittade: <span id="notFoundCount">?</span>
-    </p>
-
-    <div id="grid"></div>
+    <h1>
+        Orienteringsleder
+    </h1>
 
     <button id="flushButton" style="margin-top: 20px; background-color: darkred; color: white; padding: 10px;">
         Radera alla registreringar
     </button>
 
+    <h2>
+        Mina leder
+    </h2>
+
+    <button id="startNewCourse">Starta ny led</button>
+    <div id="newCourse">
+        <p>Välj en led:</p>
+        <div id="availableCourses"></div>
+    </div>
+
+    <div id="startedCourses"></div>
+
     <script>
-        let storage = simpleStorage;
-        let totalControls = 0;
-        let editingNumber = null;
+        const storage = simpleStorage;
 
-        fetch("data/alla.csv")
-            .then(response => response.text())
-            .then(csv => {
-                const results = Papa.parse(csv, { header: false, skipEmptyLines: true });
-                totalControls = results.data.length;
-                loadGrid();
-            });
+        function getStartedCourses() {
+            return storage.get("startedCourses") || [];
+        };
 
-        const loadGrid = () => {
-            const savedData = storage.get("gridData") || [];
-            savedData.sort((a, b) => a.number - b.number);
-            const grid = document.getElementById("grid");
-            grid.innerHTML = "";
+        function saveStartedCourses(courses) {
+            storage.set("startedCourses", courses);
+        }
 
-            let correct = 0;
-            let incorrect = 0;
-
-            savedData.forEach(element => {
-                const div = document.createElement("div");
-                div.classList.add("box", element.correct ? "green" : "red");
-                div.textContent = element.number;
-                div.dataset.number = element.number;
-                div.dataset.correct = element.correct;
-                if (!element.correct) {
-                    div.classList.add("editable");
-                    div.addEventListener("click", editRedBox);
-                }
-                grid.appendChild(div);
-
-                if (element.correct) correct++;
-                else incorrect++;
-            });
-
-            document.getElementById("correctCount").textContent = correct;
-            document.getElementById("incorrectCount").textContent = incorrect;
-
-            if (totalControls > 0) {
-                const notFound = totalControls - (correct + incorrect);
-                document.getElementById("notFoundCount").textContent = notFound;
+        function showStartedCourses() {
+            const courses = getStartedCourses();
+            const container = document.getElementById("startedCourses");
+            container.innerHTML = "";
+            if (courses.length === 0) {
+                container.innerHTML = "<p><i>Du har inga pågående leder.</i></p>"
             } else {
-                document.getElementById("notFoundCount").textContent = "?";
+                courses.forEach(course => {
+                    const button = document.createElement("button");
+                    button.textContent = course.name;
+                    button.onclick = () => window.location.href = `controlcard.html?id=${course.id}`;
+                    container.appendChild(button);
+                });
             }
         };
 
+        function compareNumbers(a, b) {
+            return a - b;
+        }
 
-        const saveGrid = (data) => {
-            storage.set("gridData", data);
-        };
+        function getAllCourses() {
+            const newCourseDiv = document.getElementById("newCourse");
+            newCourseDiv.style.display = newCourseDiv.style.display === "none" ? "block" : "none";
+            if (newCourseDiv.style.display === "none") return;
 
-        const checkCsvData = (number, code, callback) => {
-            fetch("data/alla.csv")
-                .then(response => response.text())
-                .then(csv => {
-                    const results = Papa.parse(csv, { header: false, skipEmptyLines: true });
-                    const row = results.data.find(row =>
-                        row[0] == number && row[1].trim().toLowerCase() === code.trim().toLowerCase()
-                    );
-                    callback(row ? true : false);
-                });
-        };
+            fetch("data/courses.json")
+                .then(res => res.json())
+                .then(allCourses => {
+                    const availableCoursesDiv = document.getElementById("availableCourses");
+                    availableCoursesDiv.innerHTML = "";
 
-        document.getElementById("form").addEventListener("submit", function (e) {
-            e.preventDefault();
-            const number = document.getElementById("number").value;
-            const code = document.getElementById("code").value;
-
-            const gridData = storage.get("gridData") || [];
-
-            if (editingNumber !== null) {
-                checkCsvData(number, code, (isCorrect) => {
-                    if (isCorrect) {
-                        storage.set(number, true);
-                        updateGridData(number, true, code);
-                        editingNumber = null;
-                        document.getElementById("form").reset();
-                        document.getElementById("number").readOnly = false;
-                        loadGrid();
-                    } else {
-                        alert("Koden är felaktig!");
-                    }
-                });
-            } else {
-                const existingNumber = gridData.find(data => data.number == number);
-                if (existingNumber) {
-                    document.getElementById("form").reset();
-                    return;
-                }
-
-                if (storage.get(number)) {
-                    addToGrid(number, true, code);
-                } else {
-                    checkCsvData(number, code, (isCorrect) => {
-                        if (isCorrect) {
-                            storage.set(number, true);
-                            addToGrid(number, true, code);
-                        } else {
-                            addToGrid(number, false, code);
+                    const startedCourses = getStartedCourses();
+                    const startedIds = startedCourses.map(course => course.id);
+                    console.log(allCourses.sort(compareNumbers))
+                    allCourses.sort(compareNumbers).forEach(course => {
+                        if (!startedIds.includes(course.id)) {
+                            const div = document.createElement("div");
+                            div.className = "course";
+                            div.textContent = course.name + ", " + course.desc;
+                            div.onclick = () => startCourse(course);
+                            availableCoursesDiv.appendChild(div);
                         }
                     });
-                }
-            }
-            document.getElementById("form").reset();
-        });
 
-        const addToGrid = (number, correct, code = "") => {
-            const grid = document.getElementById("grid");
-            const div = document.createElement("div");
-            div.classList.add("box", correct ? "green" : "red");
-            div.textContent = number;
-            div.dataset.number = number;
-            div.dataset.correct = correct;
+                    if (availableCoursesDiv.innerHTML === "") {
+                        availableCoursesDiv.innerHTML = "<p>Inga fler leder att starta.</p>";
+                    }
+                });
+        }
 
-            if (!correct) {
-                div.classList.add("editable");
-                div.addEventListener("click", editRedBox);
-            }
 
-            grid.appendChild(div);
-            updateGridData(number, correct, code);
-            loadGrid();
-        };
+        function startCourse(course) {
+            const startedCourses = getStartedCourses();
+            startedCourses.push({ id: course.id, name: course.name });
+            saveStartedCourses(startedCourses);
+            document.getElementById("newCourse").style.display = "none";
+            window.location.href = `controlcard.html?id=${course.id}`;
+        }
 
-        const editRedBox = (e) => {
-            const box = e.target;
-            const number = box.dataset.number;
-            const savedData = storage.get("gridData") || [];
-            const item = savedData.find(d => d.number == number);
 
-            document.getElementById("number").value = number;
-            document.getElementById("number").readOnly = true;
-            document.getElementById("code").value = item?.code || "";
-            document.getElementById("code").focus();
-            editingNumber = number;
-        };
 
-        const updateGridData = (number, correct, code = "") => {
-            const savedData = storage.get("gridData") || [];
-            const index = savedData.findIndex(item => item.number == number);
-            if (index !== -1) {
-                savedData[index].correct = correct;
-                savedData[index].code = code;
-            } else {
-                savedData.push({ number, correct, code });
-            }
-            saveGrid(savedData);
-        };
+
+
+        document.getElementById("startNewCourse").addEventListener("click", getAllCourses);
 
         document.getElementById("flushButton").addEventListener("click", function () {
-            if (confirm("Är du säker på att du vill rensa all data?")) {
-                storage.flush();
-                editingNumber = null;
-                document.getElementById("form").reset();
-                document.getElementById("number").readOnly = false;
-                loadGrid();
-            }
+            storage.flush();
+            showStartedCourses();
+            document.getElementById("availableCourses").innerHTML = "";
         });
 
-        loadGrid();
+        showStartedCourses();
     </script>
 </body>
 

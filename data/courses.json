@@ -1,0 +1,106 @@
+[
+    {
+        "id": "all",
+        "name": "Vässaröpasset",
+        "desc": "(Alla kontroller)",
+        "numericalorder": true,
+        "count": 13,
+        "controlpoints": [
+            [35,"A"],
+            [32,"B"],
+            [44,"C"],
+            [48,"D"],
+            [37,"E"],
+            [43,"F"],
+            [33,"G"],
+            [36,"H"],
+            [46,"I"],
+            [47,"K"],
+            [45,"L"],
+            [33,"N"],
+            [34,"O"]
+        ]
+    },
+    {
+        "id": "white",
+        "name": "Vit led",
+        "desc": "En led va.",
+        "numericalorder": false,
+        "count": 8,
+        "controlpoints": [
+            [35,"A"],
+            [32,"B"],
+            [44,"C"],
+            [48,"D"],
+            [37,"E"],
+            [43,"F"],
+            [33,"G"],
+            [36,"H"]
+        ]
+    },
+    {
+        "id": "yellow",
+        "name": "Gul vägvalsbana",
+        "desc": "En led va.",
+        "numericalorder": false,
+        "count": 7,
+        "controlpoints": [
+            [46,"I"],
+            [32,"J"],
+            [47,"K"],
+            [45,"L"],
+            [43,"M"],
+            [33,"N"],
+            [34,"O"]
+        ]
+    },
+    {
+        "id": "mini",
+        "name": "Miniorienteringen",
+        "desc": "Liten orienteringsled runt husen på centrala ön.",
+        "numericalorder": true,
+        "count": 15,
+        "controlpoints": [
+            [1,"o"],
+            [2,"e"],
+            [3,"n"],
+            [4,"m"],
+            [5,"n"],
+            [6,"e"],
+            [7,"r"],
+            [8,"i"],
+            [9,"g"],
+            [10,"i"],
+            [11,"r"],
+            [12,"t"],
+            [13,"å"],
+            [14,"s"],
+            [15,"l"]
+        ]
+    },
+    {
+        "id": "foto",
+        "name": "Fotoorienteringen",
+        "desc": "Para ihop en bild till varje kartkontroll. ",
+        "numericalorder": true,
+        "count": 16,
+        "controlpoints": [
+            [1,"c"],
+            [2,"g"],
+            [3,"n"],
+            [4,"d"],
+            [5,"o"],
+            [6,"k"],
+            [7,"a"],
+            [8,"h"],
+            [9,"f"],
+            [10,"b"],
+            [11,"j"],
+            [12,"p"],
+            [13,"m"],
+            [14,"e"],
+            [15,"i"],
+            [16,"l"]
+        ]
+    }
+]
