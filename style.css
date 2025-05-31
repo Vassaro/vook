@@ -1,0 +1,131 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    padding: 20px;
+}
+
+div {
+    padding: 5px;
+}
+
+.course {
+    padding: 10px;
+    background-color: #ddd;
+    margin: 5px 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#newCourse {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px dashed #aaa;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 1em;
+}
+
+#flushButton {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#startNewCourse {
+    background-color: lightgray;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#startedCourses {
+    border: 1px dashed #aaa;
+    border-radius: 10px;
+    display: grid;
+    background-color: #f9f9f9;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.course {
+    background-color: #eee;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.course:hover {
+    background-color: #ddd;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+
+.box {
+    padding: 10px;
+    text-align: center;
+    color: white;
+    font-size: 1.2em;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: red;
+    color: white;
+}
+
+.gray {
+    background-color: lightgray;
+    color: black;
+    cursor: pointer;
+}
+
+.editable {
+    border: 2px dashed white;
+    cursor: pointer;
+}
+
+#popup {
+    display: none;
+    position: fixed padding: 10px;
+    background: #eee;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.progress {
+    display: inline-table;
+    padding: 5px;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.2em;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+#popupLabel {
+    font-weight: bold;
+}
+
+.courseInfo {}
