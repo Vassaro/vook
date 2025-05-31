@@ -1,10 +1,11 @@
 [
     {
         "id": "all",
-        "name": "Vässaröpasset",
-        "desc": "(Alla kontroller)",
+        "name": "Stora orienteringen",
+        "desc": "Alla vanliga orienteringskontroller på ön.",
+        "length": "",
         "numericalorder": true,
-        "count": 13,
+        "count": 66,
         "controlpoints": [
             [35,"A"],
             [32,"B"],
@@ -17,14 +18,14 @@
             [46,"I"],
             [47,"K"],
             [45,"L"],
-            [33,"N"],
             [34,"O"]
         ]
     },
     {
         "id": "white",
         "name": "Vit led",
-        "desc": "En led va.",
+        "desc": "",
+        "length": "",
         "numericalorder": false,
         "count": 8,
         "controlpoints": [
@@ -41,7 +42,8 @@
     {
         "id": "yellow",
         "name": "Gul vägvalsbana",
-        "desc": "En led va.",
+        "desc": "",
+        "length": "",
         "numericalorder": false,
         "count": 7,
         "controlpoints": [
@@ -58,6 +60,7 @@
         "id": "mini",
         "name": "Miniorienteringen",
         "desc": "Liten orienteringsled runt husen på centrala ön.",
+        "length": "",
         "numericalorder": true,
         "count": 15,
         "controlpoints": [
@@ -82,6 +85,7 @@
         "id": "foto",
         "name": "Fotoorienteringen",
         "desc": "Para ihop en bild till varje kartkontroll. ",
+        "length": "",
         "numericalorder": true,
         "count": 16,
         "controlpoints": [

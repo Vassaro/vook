@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Startkort</title>
+    <title>Vässarö Orientering</title>
     <link rel="icon" type="image/x-icon" href="img/hollyrosa-square.png">
     <meta charset="utf-8" />
 
@@ -16,25 +16,39 @@
 </head>
 
 <body>
+    <hr>
+
     <h1>
-        Orienteringsleder
+        Orientering på Vässarö
     </h1>
 
-    <button id="flushButton" style="margin-top: 20px; background-color: darkred; color: white; padding: 10px;">
-        Radera alla registreringar
-    </button>
+    <p>
+        <i>Informationstext...</i>
+    </p>
+
+    <hr>
 
     <h2>
         Mina leder
     </h2>
 
     <button id="startNewCourse">Starta ny led</button>
+
     <div id="newCourse">
-        <p>Välj en led:</p>
+        <p>Välj en led att starta:</p>
         <div id="availableCourses"></div>
     </div>
 
+    <hr>
+
     <div id="startedCourses"></div>
+
+    <hr>
+
+    <button id="flushButton" style="margin-top: 20px; background-color: darkred; color: white; padding: 10px;">
+        Radera alla registreringar
+    </button>
+
 
     <script>
         const storage = simpleStorage;
@@ -47,24 +61,45 @@
             storage.set("startedCourses", courses);
         }
 
-        function showStartedCourses() {
-            const courses = getStartedCourses();
+        async function showStartedCourses() {
             const container = document.getElementById("startedCourses");
             container.innerHTML = "";
-            if (courses.length === 0) {
-                container.innerHTML = "<p><i>Du har inga pågående leder.</i></p>"
-            } else {
-                courses.forEach(course => {
-                    const button = document.createElement("button");
-                    button.textContent = course.name;
-                    button.onclick = () => window.location.href = `controlcard.html?id=${course.id}`;
-                    container.appendChild(button);
-                });
-            }
-        };
 
-        function compareNumbers(a, b) {
-            return a - b;
+            const startedCourses = getStartedCourses();
+            if (startedCourses.length === 0) {
+                container.innerHTML = "<p><i>Du har inga pågående leder.</i></p>";
+                return;
+            }
+
+            const response = await fetch("data/courses.json");
+            const allCourses = await response.json();
+
+            startedCourses
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .forEach(started => {
+                    const course = allCourses.find(c => c.id === started.id);
+                    if (!course) return;
+
+                    const progress = simpleStorage.get(course.id) || [];
+                    const correctCount = progress.filter(entry => {
+                        const real = course.controlpoints.find(cp => cp[0] === entry.number);
+                        return real && real[1].toLowerCase() === entry.code.toLowerCase();
+                    }).length;
+
+                    const total = course.controlpoints.length;
+
+                    const div = document.createElement("div");
+                    div.className = "course";
+                    div.onclick = () => window.location.href = `controlcard.html?id=${course.id}`;
+
+                    div.innerHTML = `
+            <strong>${course.name}</strong><br>
+            ${course.desc || "-"}<br>
+            Längd: ${course.length || "-"}<br>
+            Avklarade: ${correctCount} / ${total}
+        `;
+                    container.appendChild(div);
+                });
         }
 
         function getAllCourses() {
@@ -80,22 +115,31 @@
 
                     const startedCourses = getStartedCourses();
                     const startedIds = startedCourses.map(course => course.id);
-                    console.log(allCourses.sort(compareNumbers))
-                    allCourses.sort(compareNumbers).forEach(course => {
-                        if (!startedIds.includes(course.id)) {
+
+                    allCourses
+                        .filter(course => !startedIds.includes(course.id))
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .forEach(course => {
                             const div = document.createElement("div");
                             div.className = "course";
-                            div.textContent = course.name + ", " + course.desc;
                             div.onclick = () => startCourse(course);
+
+                            div.innerHTML = `
+                                <strong>${course.name}</strong><br>
+                                ${course.desc || "-"}<br>
+                                Längd: ${course.length || "-"}<br>
+                                Antal kontroller: ${course.count || course.controlpoints.length}
+                                `;
+
                             availableCoursesDiv.appendChild(div);
-                        }
-                    });
+                        });
 
                     if (availableCoursesDiv.innerHTML === "") {
-                        availableCoursesDiv.innerHTML = "<p>Inga fler leder att starta.</p>";
+                        availableCoursesDiv.innerHTML = "<p><i>Inga fler leder att starta.</i></p>";
                     }
                 });
         }
+
 
 
         function startCourse(course) {

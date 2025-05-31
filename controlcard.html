@@ -16,35 +16,51 @@
 </head>
 
 <body>
+
+    <hr>
+
     <h1>Startkort</h1>
     <h2 id="nameOfCourse"></h2>
-    <h2>Registrera kontroller</h2>
-    <form id="form" method="post">
-        <label for="number">Kontrollnummer:</label><br>
-        <input type="number" id="number" placeholder="Kontrollens nummer" required autocomplete="off"><br><br>
-        <label for="code">Kod:</label><br>
-        <input type="text" id="code" placeholder="Koden på kontrollen" required autocomplete="off"><br><br>
-        <button type="submit">Skicka in</button>
-    </form>
 
-    <h2>Kontroller</h2>
+    <hr>
 
-    <p>
-        ✅ Rätt: <span id="correctCount">0</span>
-        ❌ Fel: <span id="incorrectCount">0</span>
-        🕵️ Ej hittade: <span id="notFoundCount">?</span>
-    </p>
+    <table id="courseInfo">
+        <tbody></tbody>
+    </table>
+
+    <hr>
+
+    <div id="popup">
+        <span id="popupLabel">Kontroll:</span>
+        <input type="text" id="popupCode" placeholder="Koden på kontrollen" required autocomplete="off">
+        <button id="popupSubmit">Skicka in</button>
+        <button id="popupCancel">Avbryt</button>
+    </div>
+
+    <div style="display: block; ">
+        <div class="progress" style="background-color: green; color: white;">
+            Rätt: <span id="correctCount">0</span>
+        </div>
+        <div class="progress" style="background-color: red; color: white;">
+            Fel: <span id="incorrectCount">0</span>
+        </div>
+        <div class="progress" style="background-color: lightgray; color: black;">
+            Kvar: <span id="notFoundCount">?</span>
+        </div>
+    </div>
+
+    <hr>
 
     <div id="grid"></div>
+
+    <hr>
+
 
     <script>
 
         const storage = simpleStorage;
-        console.log(storage);
-
         const courseID = getCourseID();
-        console.log(courseID);
-
+        
         function loadCourse(courseID) {
             return storage.get(courseID) || [];
         };
@@ -71,30 +87,13 @@
                 return;
             }
 
-            console.log(course)
             if (course.numericalorder) {
-                course.controlpoints.sort();
+                course.controlpoints.sort((a, b) => a[0]-b[0]);
             }
 
-            const courseProgress = loadCourse(courseID)
-            console.log(courseProgress)
+            let courseProgress = loadCourse(courseID)
 
-            const form = document.getElementById("form");
             const grid = document.getElementById("grid");
-
-            form.addEventListener("submit", (e) => {
-                e.preventDefault();
-                const number = parseInt(document.getElementById("number").value.trim());
-                const code = document.getElementById("code").value.trim();
-
-                // Uppdatera progress
-                courseProgress = courseProgress.filter(entry => entry.number !== number);
-                courseProgress.push({ number, code });
-
-                saveCourseProgress(courseID, courseProgress);
-                renderGrid(course, courseProgress);
-                form.reset();
-            });
 
             function renderGrid(course, progress) {
                 grid.innerHTML = "";
@@ -105,9 +104,9 @@
                 course.controlpoints.forEach(([number, code]) => {
                     const cell = document.createElement("div");
                     cell.className = "box";
-                    cell.textContent = number;
+                    
 
-                    const found = courseProgress.find(entry => entry.number == number);
+                    const found = courseProgress.find(entry => entry.number === number);
                     if (found) {
                         if (found.code.toLowerCase() === code.toLowerCase()) {
                             cell.classList.add("green");
@@ -116,8 +115,19 @@
                             cell.classList.add("red");
                             incorrect++;
                         }
+                        cell.textContent = number + ": " + code.toUpperCase();
                     } else {
                         cell.classList.add("gray");
+                        cell.textContent = number;
+                    }
+                    if (!cell.classList.contains("green")) {
+                        cell.addEventListener("click", () => {
+                            selectedNumber = number;
+                            popupLabel.textContent = `Kontroll ${number}:`;
+                            popupCode.value = found ? found.code : "";
+                            popup.style.display = "block";
+                            popupCode.focus();
+                        });
                     }
 
                     grid.appendChild(cell);
@@ -130,6 +140,44 @@
             };
 
             renderGrid(course, courseProgress);
+
+            const popup = document.getElementById("popup");
+            const popupLabel = document.getElementById("popupLabel");
+            const popupCode = document.getElementById("popupCode");
+            const popupSubmit = document.getElementById("popupSubmit");
+            const popupCancel = document.getElementById("popupCancel");
+
+            let selectedNumber = null;
+
+            popupCancel.addEventListener("click", () => {
+                popup.style.display = "none";
+                selectedNumber = null;
+                popupCode.value = "";
+            });
+
+            popupSubmit.addEventListener("click", () => {
+                if (selectedNumber === null) return;
+
+                const code = popupCode.value.trim();
+                if (!code) return;
+
+                courseProgress = courseProgress.filter(entry => entry.number !== selectedNumber);
+                courseProgress.push({ number: selectedNumber, code });
+
+                saveCourse(courseID, courseProgress);
+                renderGrid(course, courseProgress);
+
+                popup.style.display = "none";
+                popupCode.value = "";
+                selectedNumber = null;
+            });
+
+            const infoTable = document.getElementById("courseInfo").querySelector("tbody");
+            infoTable.innerHTML = `
+                <tr><td>Beskrivning</td><td>${course.desc || "-"}</td></tr>
+                <tr><td>Längd</td><td>${course.length || "-"}</td></tr>
+                <tr><td>Antal kontroller</td><td>${course.count || course.controlpoints.length}</td></tr>
+                `;
         }
 
         init();
