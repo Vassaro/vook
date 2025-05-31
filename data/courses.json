@@ -79,21 +79,21 @@
         "numericalorder": false,
         "count": 8,
         "controlpoints": [
-            [35,"A"],
-            [32,"B"],
-            [44,"C"],
-            [48,"D"],
-            [37,"E"],
-            [43,"F"],
-            [33,"G"],
-            [36,"H"]
+            [35,"J"],
+            [32,"H"],
+            [44,"M"],
+            [48,"N"],
+            [37,"A"],
+            [43,"B"],
+            [33,"A"],
+            [36,"I"]
         ]
     },
     {
         "id": "yellow",
         "name": "Gul vägvalsbana",
         "desc": "",
-        "length": "",
+        "length": "Ca. 2.5km fv.",
         "numericalorder": false,
         "count": 7,
         "controlpoints": [
