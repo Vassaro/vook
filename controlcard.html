@@ -53,9 +53,15 @@
 
     <hr>
 
-    <button id="flushButton">
-        Radera alla registreringar
-    </button>
+    <div id="buttonGrid">
+        <button id="clearButton">
+            Nollställ leden
+        </button>
+
+        <button id="deleteButton">
+            Radera leden
+        </button>
+    </div>
 
     <script>
 
@@ -182,17 +188,31 @@
                 <tr><td>Antal kontroller</td><td>${course.count || course.controlpoints.length}</td></tr>
                 `;
 
-            const flushButton = document.getElementById("flushButton");
+            const clearButton = document.getElementById("clearButton");
             if (!simpleStorage.hasKey(courseID)) {
-                flushButton.style.display = "none";
+                clearButton.style.display = "none";
             }
-            document.getElementById("flushButton").addEventListener("click", function () {
-                const confirmed = confirm("Är du säker att du vill nollställa den här leden? Alla dina svar kommer raderas.")
+            clearButton.addEventListener("click", function () {
+                const confirmed = confirm("Är du säker att du vill nollställa den här leden och börja om? Alla dina svar kommer raderas.")
                 if (confirmed) {
                     simpleStorage.deleteKey(courseID);
                     location.reload();
                 }
             });
+
+            const deleteButton = document.getElementById("deleteButton");
+            deleteButton.addEventListener("click", function () {
+                const confirmed = confirm("Är du säker att du vill radera den här leden? Alla dina svar kommer raderas och leden plockas bort.")
+                if (confirmed) {
+                    simpleStorage.deleteKey(courseID);
+
+                    const startedCourses = simpleStorage.get("startedCourses") || [];
+                    const updatedCourses = startedCourses.filter(course => course.id !== courseID);
+                    simpleStorage.set("startedCourses", updatedCourses);
+
+                    window.location.href = "./index.html";
+                }
+            })
         }
 
         init();
