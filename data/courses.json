@@ -2,7 +2,7 @@
     {
         "id": "all",
         "name": "Stora orienteringen",
-        "desc": "Alla vanliga orienteringskontroller på ön.",
+        "desc": "Alla vanliga orienteringskontroller på ön. Du väljer själv i vilken ordning du tar kontrollerna.",
         "length": "",
         "numericalorder": true,
         "count": 62,
@@ -92,7 +92,7 @@
     {
         "id": "yellow",
         "name": "Gul vägvalsbana",
-        "desc": "",
+        "desc": "På den här banan gäller det att göra kloka vägval. Du kan till exempel tävla mot en kompis genom att ni väljer varsin väg till nästa kontroll.",
         "length": "2.5km",
         "numericalorder": false,
         "count": 7,
@@ -155,6 +155,56 @@
             [14,"e"],
             [15,"i"],
             [16,"l"]
+        ]
+    },
+    {
+        "id": "blue",
+        "name": "Blå led",
+        "desc": "",
+        "length": "",
+        "numericalorder": false,
+        "count": 0,
+        "controlpoints": [
+        ]
+    },
+    {
+        "id": "greenpath",
+        "name": "Grön led på stigar",
+        "desc": "",
+        "length": "",
+        "numericalorder": false,
+        "count": 0,
+        "controlpoints": [
+        ]
+    },
+    {
+        "id": "greenroad",
+        "name": "Grön led på vägar",
+        "desc": "",
+        "length": "",
+        "numericalorder": false,
+        "count": 0,
+        "controlpoints": [
+        ]
+    },
+    {
+        "id": "red",
+        "name": "Röd led",
+        "desc": "",
+        "length": "",
+        "numericalorder": false,
+        "count": 0,
+        "controlpoints": [
+        ]
+    },
+    {
+        "id": "vsk-east",
+        "name": "Östra vindskyddet",
+        "desc": "",
+        "length": "",
+        "numericalorder": true,
+        "count": 0,
+        "controlpoints": [
         ]
     }
 ]

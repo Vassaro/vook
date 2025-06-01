@@ -107,26 +107,31 @@
 
                 let correct = 0;
                 let incorrect = 0;
-
+                var i = 1;
                 course.controlpoints.forEach(([number, code]) => {
                     const cell = document.createElement("div");
                     cell.className = "box";
-
-
+                    
+                    
+                    if (course.numericalorder) {
+                        var order = "";
+                    } else {
+                        var order = i + ": "
+                    }
                     const found = courseProgress.find(entry => entry.number === number);
                     if (found) {
                         if (found.code.toLowerCase() === code.toLowerCase()) {
                             cell.classList.add("green");
                             correct++;
-                            cell.textContent = number + ": " + code.toUpperCase();
+                            cell.textContent = order + number + " - " + code.toUpperCase();
                         } else {
                             cell.classList.add("red");
                             incorrect++;
-                            cell.textContent = number;
+                            cell.textContent = order + number;
                         }
                     } else {
                         cell.classList.add("gray");
-                        cell.textContent = number;
+                        cell.textContent = order + number;
                     }
                     if (!cell.classList.contains("green")) {
                         cell.addEventListener("click", () => {
@@ -137,6 +142,7 @@
                             popupCode.focus();
                         });
                     }
+                    i++;
 
                     grid.appendChild(cell);
                 });
