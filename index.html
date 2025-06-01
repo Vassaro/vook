@@ -6,6 +6,8 @@
     <link rel="icon" type="image/x-icon" href="img/hollyrosa-square.png">
     <meta charset="utf-8" />
 
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/simplestorage.js@0.2.1/simpleStorage.min.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -19,26 +21,20 @@
         Orientering på Vässarö
     </h1>
 
-    <p>
-        <i>Informationstext...</i><br>
-    </p>
-
     <hr>
 
-    <h2>
-        Mina leder
-    </h2>
+    <button id="startNewCourse"><i class="fa fa-solid fa-plus"></i> Starta ny led</button>
 
-    <button id="startNewCourse">Starta ny led</button>
+        <div id="newCourse">
+            <p>Välj en led att starta:</p>
+            <div id="availableCourses"></div>
+        </div>
 
-    <div id="newCourse">
-        <p>Välj en led att starta:</p>
-        <div id="availableCourses"></div>
+    <div id="startedCourses">
+        
     </div>
 
     <hr>
-
-    <div id="startedCourses"></div>
 
     <script>
         const storage = simpleStorage;
@@ -53,11 +49,11 @@
 
         async function showStartedCourses() {
             const container = document.getElementById("startedCourses");
-            container.innerHTML = "";
+            // container.innerHTML = "";
 
             const startedCourses = getStartedCourses();
             if (startedCourses.length === 0) {
-                container.innerHTML = "<p><i>Du har inga pågående leder.</i></p>";
+                container.innerHTML += "<p><i>Du har inga pågående leder.</i></p>";
                 return;
             }
 
@@ -83,11 +79,12 @@
                     div.onclick = () => window.location.href = `controlcard.html?id=${course.id}`;
 
                     div.innerHTML = `
-            <strong>${course.name}</strong><br>
-            ${course.desc || "-"}<br>
-            Längd: ${course.length || "-"}<br>
-            Avklarade: ${correctCount} / ${total}
-        `;
+                        <i class="fa fa-solid fa-compass"></i>
+                        <b><strong>${course.name}</strong></b><br>
+                        ${course.desc || "-"}<br>
+                        Längd: ${course.length || "-"}<br>
+                        Avklarade: ${correctCount} / ${total}
+                    `;
                     container.appendChild(div);
                 });
         }
@@ -115,11 +112,12 @@
                             div.onclick = () => startCourse(course);
 
                             div.innerHTML = `
-                                <strong>${course.name}</strong><br>
+                                <i class="fa fa-solid fa-plus"></i>
+                                <b><strong>${course.name}</strong></b><br>
                                 ${course.desc || "-"}<br>
                                 Längd: ${course.length || "-"}<br>
                                 Antal kontroller: ${course.count || course.controlpoints.length}
-                                `;
+                            `;
 
                             availableCoursesDiv.appendChild(div);
                         });
@@ -145,12 +143,6 @@
 
 
         document.getElementById("startNewCourse").addEventListener("click", getAllCourses);
-
-        // document.getElementById("flushButton").addEventListener("click", function () {
-        //     storage.flush();
-        //     showStartedCourses();
-        //     document.getElementById("availableCourses").innerHTML = "";
-        // });
 
         showStartedCourses();
     </script>

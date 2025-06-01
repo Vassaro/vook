@@ -47,13 +47,18 @@ button {
 }
 
 #startNewCourse {
-    background-color: lightgray;
+    background-color: ddd;
     color: black;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     font-weight: bold;
+    text-align: left;
     margin-left: 10px;
+}
+
+#startNewCourse:hover {
+    background-color: #eee;
 }
 
 #startedCourses {
@@ -68,7 +73,6 @@ button {
 .course {
     background-color: #eee;
     padding: 10px;
-    margin: 5px 0;
     border-radius: 10px;
     cursor: pointer;
 }
@@ -142,3 +146,5 @@ button {
 #courseInfo {
     padding: 10px;
 }
+
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
