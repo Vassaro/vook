@@ -4,7 +4,7 @@
         "name": "Stora orienteringen",
         "desc": "Alla vanliga orienteringskontroller på Vässarö. Du väljer själv i vilken ordning du tar kontrollerna.",
         "visible": true,
-        "length": "?",
+        "length": "- km",
         "numericalorder": true,
         "controlpoints": [
             [31,"R"],
