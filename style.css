@@ -151,8 +151,17 @@ button {
     font-weight: bold;
 }
 
-#courseInfo {
+table,
+th,
+td {
+    /* border: 1px solid; */
     padding: 10px;
+    vertical-align: top;
+    border-collapse: collapse;
+}
+
+table {
+    width: 100%;
 }
 
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');

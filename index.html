@@ -25,14 +25,12 @@
 
     <button id="startNewCourse"><i class="fa fa-solid fa-plus"></i> Starta ny led</button>
 
-        <div id="newCourse">
-            <p>Välj en led att starta:</p>
-            <div id="availableCourses"></div>
-        </div>
-
-    <div id="startedCourses">
-        
+    <div id="newCourse">
+        <p>Välj en led att starta:</p>
+        <div id="availableCourses"></div>
     </div>
+
+    <div id="startedCourses"></div>
 
     <hr>
 
@@ -71,8 +69,6 @@
                         return real && real[1].toLowerCase() === entry.code.toLowerCase();
                     }).length;
 
-                    const total = course.controlpoints.length;
-
                     const div = document.createElement("div");
                     div.className = "course";
                     div.onclick = () => window.location.href = `controlcard.html?id=${course.id}`;
@@ -80,9 +76,8 @@
                     div.innerHTML = `
                         <i class="fa fa-solid fa-compass"></i>
                         <b><strong>${course.name}</strong></b><br>
-                        ${course.desc || "-"}<br>
                         Längd: ${course.length || "-"}<br>
-                        Avklarade: ${correctCount} / ${total}
+                        Avklarade: ${correctCount} / ${course.controlpoints.length}
                     `;
                     container.appendChild(div);
                 });
@@ -113,10 +108,10 @@
 
                             div.innerHTML = `
                                 <i class="fa fa-solid fa-plus"></i>
-                                <b><strong>${course.name}</strong></b><br>
-                                ${course.desc || "-"}<br>
-                                Längd: ${course.length || "-"}<br>
-                                Antal kontroller: ${course.controlpoints.length}
+                                <b><strong>${course.name}:</strong></b>
+                                ${course.length + "," || "-"}
+                                ${course.controlpoints.length} kontroller<br>
+                                ${course.desc || "-"}
                             `;
 
                             availableCoursesDiv.appendChild(div);

@@ -22,14 +22,6 @@
 
     <h1>Startkort<span id="nameOfCourse"></span></h1>
 
-    <hr>
-
-    <table id="courseInfo">
-        <tbody></tbody>
-    </table>
-
-    <hr>
-
     <div id="popup">
         <span id="popupLabel">Kontroll:</span>
         <input type="text" id="popupCode" placeholder="Koden på kontrollen" required autocomplete="off">
@@ -52,6 +44,14 @@
     <hr>
 
     <div id="controlGrid"></div>
+
+    <hr>
+
+    <h3>Information</h3>
+
+    <table id="courseInfo">
+        <tbody></tbody>
+    </table>
 
     <hr>
 
@@ -100,19 +100,19 @@
             return allCourses.find(course => course.id === courseID);
         }
 
-        function chiffrera(char) {
-            const mod = "Z".charCodeAt(0) - "A".charCodeAt(0) + 1;
-            const key = 13;
-            index = char.toUpperCase().charCodeAt(0) - "A".charCodeAt(0);
-            const newIndex = (index + key) % mod + "A".charCodeAt("0");
-            newChar = String.fromCharCode(newIndex);
-            console.log(mod, char, index, newChar, newIndex);
-            return newChar
-        }
+        // function chiffrera(char) {
+        //     const mod = "Z".charCodeAt(0) - "A".charCodeAt(0) + 1;
+        //     const key = 13;
+        //     index = char.toUpperCase().charCodeAt(0) - "A".charCodeAt(0);
+        //     const newIndex = (index + key) % mod + "A".charCodeAt("0");
+        //     newChar = String.fromCharCode(newIndex);
+        //     console.log(mod, char, index, newChar, newIndex);
+        //     return newChar
+        // }
 
-        function dechiffrera(char) {
-            return chiffrera(char)
-        }
+        // function dechiffrera(char) {
+        //     return chiffrera(char)
+        // }
 
         // chiffrera("A");
         // chiffrera("Z");
@@ -230,9 +230,9 @@
 
             const infoTable = document.getElementById("courseInfo").querySelector("tbody");
             infoTable.innerHTML = `
-                <tr><td>Beskrivning</td><td>${course.desc || "-"}</td></tr>
-                <tr><td>Längd</td><td>${course.length || "-"}</td></tr>
-                <tr><td>Antal kontroller</td><td>${course.controlpoints.length}</td></tr>
+                <tr><td><b>Beskrivning</b></td><td>${course.desc || "-"}</td></tr>
+                <tr><td><b>Längd</b></td><td>${course.length || "-"}</td></tr>
+                <tr><td><b>Antal kontroller</b></td><td>${course.controlpoints.length}</td></tr>
                 `;
 
             const clearButton = document.getElementById("clearButton");
