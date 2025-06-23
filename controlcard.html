@@ -6,6 +6,8 @@
     <link rel="icon" type="image/x-icon" href="img/hollyrosa-square.png">
     <meta charset="utf-8" />
 
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/simplestorage.js@0.2.1/simpleStorage.min.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -36,13 +38,13 @@
     </div>
 
     <div id="progressGrid">
-        <div class="progress" style="background-color: green; color: white;">
+        <div class="progress" style="background-color: var(--green);">
             Rätt: <span id="correctCount">0</span>
         </div>
-        <div class="progress" style="background-color: red; color: white;">
+        <div class="progress" style="background-color: var(--orange);">
             Fel: <span id="incorrectCount">0</span>
         </div>
-        <div class="progress" style="background-color: lightgray; color: black;">
+        <div class="progress" style="background-color: var(--blue);">
             Kvar: <span id="notFoundCount">?</span>
         </div>
     </div>
@@ -50,6 +52,17 @@
     <hr>
 
     <div id="controlGrid"></div>
+
+    <hr>
+
+    <h3>Handledning</h3>
+
+    <p>Varje kontroll ute i skogen är på din karta numrerad från 1, 2, 3, ..., men i verkligheten har de en annan siffra
+        så vi kan återanvända samma kontroll på flera leder. Till exempel har kontroll 5 på den gula vägvalsbanan numret
+        43. På startkortet ovan står det då "5: 43".</p>
+
+    <p>På varje kontroll hittar du en bokstav som är kontrollens "lösenkod". Tryck på kontrollen i startkortet för att
+        fylla i koden. Är det rätt så blir rutan grön, annars blir den orange.</p>
 
     <hr>
 
@@ -87,6 +100,34 @@
             return allCourses.find(course => course.id === courseID);
         }
 
+        function chiffrera(char) {
+            const mod = "Z".charCodeAt(0) - "A".charCodeAt(0) + 1;
+            const key = 13;
+            index = char.toUpperCase().charCodeAt(0) - "A".charCodeAt(0);
+            const newIndex = (index + key) % mod + "A".charCodeAt("0");
+            newChar = String.fromCharCode(newIndex);
+            console.log(mod, char, index, newChar, newIndex);
+            return newChar
+        }
+
+        function dechiffrera(char) {
+            return chiffrera(char)
+        }
+
+        // chiffrera("A");
+        // chiffrera("Z");
+        // dechiffrera("N");
+        // dechiffrera("M");
+
+        // async function getKeys() {
+        //     const response = await fetch("data/keys.json");
+        //     const allKeys = await response.json();
+        //     console.log(allKeys[0].keys.find((element) => element[0] == 46))
+        //     return allKeys;
+        // }
+        // getKeys();
+        // console.log(dechiffrera("Y"))
+
         async function init() {
             const course = await getCourse(courseID);
             if (!course) {
@@ -98,7 +139,7 @@
                 course.controlpoints.sort((a, b) => a[0] - b[0]);
             }
 
-            let courseProgress = loadCourse(courseID)
+            let courseProgress = loadCourse(courseID);
 
             const grid = document.getElementById("controlGrid");
 
@@ -191,7 +232,7 @@
             infoTable.innerHTML = `
                 <tr><td>Beskrivning</td><td>${course.desc || "-"}</td></tr>
                 <tr><td>Längd</td><td>${course.length || "-"}</td></tr>
-                <tr><td>Antal kontroller</td><td>${course.count || course.controlpoints.length}</td></tr>
+                <tr><td>Antal kontroller</td><td>${course.controlpoints.length}</td></tr>
                 `;
 
             const clearButton = document.getElementById("clearButton");

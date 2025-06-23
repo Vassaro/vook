@@ -49,7 +49,6 @@
 
         async function showStartedCourses() {
             const container = document.getElementById("startedCourses");
-            // container.innerHTML = "";
 
             const startedCourses = getStartedCourses();
             if (startedCourses.length === 0) {
@@ -104,6 +103,7 @@
                     const startedIds = startedCourses.map(course => course.id);
 
                     allCourses
+                        .filter(course => (course.visible))
                         .filter(course => !startedIds.includes(course.id))
                         .sort((a, b) => a.name.localeCompare(b.name))
                         .forEach(course => {
@@ -116,7 +116,7 @@
                                 <b><strong>${course.name}</strong></b><br>
                                 ${course.desc || "-"}<br>
                                 Längd: ${course.length || "-"}<br>
-                                Antal kontroller: ${course.count || course.controlpoints.length}
+                                Antal kontroller: ${course.controlpoints.length}
                             `;
 
                             availableCoursesDiv.appendChild(div);
@@ -137,10 +137,6 @@
             document.getElementById("newCourse").style.display = "none";
             window.location.href = `controlcard.html?id=${course.id}`;
         }
-
-
-
-
 
         document.getElementById("startNewCourse").addEventListener("click", getAllCourses);
 

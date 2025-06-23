@@ -2,10 +2,10 @@
     {
         "id": "all",
         "name": "Stora orienteringen",
-        "desc": "Alla vanliga orienteringskontroller på ön. Du väljer själv i vilken ordning du tar kontrollerna.",
-        "length": "",
+        "desc": "Alla vanliga orienteringskontroller på Vässarö. Du väljer själv i vilken ordning du tar kontrollerna.",
+        "visible": true,
+        "length": "?",
         "numericalorder": true,
-        "count": 62,
         "controlpoints": [
             [31,"R"],
             [32,"H"],
@@ -74,10 +74,10 @@
     {
         "id": "white",
         "name": "Vit led",
-        "desc": "",
-        "length": "",
+        "visible": true,
+        "desc": "Mestadels på vägar och stigar på mellersta Vässarö.",
+        "length": "2.0 km",
         "numericalorder": false,
-        "count": 8,
         "controlpoints": [
             [35,"J"],
             [32,"H"],
@@ -92,10 +92,10 @@
     {
         "id": "yellow",
         "name": "Gul vägvalsbana",
-        "desc": "På den här banan gäller det att göra kloka vägval. Du kan till exempel tävla mot en kompis genom att ni väljer varsin väg till nästa kontroll.",
-        "length": "2.5km",
+        "desc": "På den här banan gäller det att göra kloka vägval. Du kan till exempel tävla mot en kompis genom att ni väljer varsin väg till nästa kontroll. Start och mål kontroll 40 vid Lillgårn.",
+        "visible": true,
+        "length": "2.5 km",
         "numericalorder": false,
-        "count": 7,
         "controlpoints": [
             [46,"L"],
             [32,"H"],
@@ -110,9 +110,9 @@
         "id": "mini",
         "name": "Miniorienteringen",
         "desc": "Liten orienteringsled runt husen på centrala ön.",
+        "visible": false,
         "length": "",
         "numericalorder": true,
-        "count": 15,
         "controlpoints": [
             [1,"o"],
             [2,"e"],
@@ -134,10 +134,10 @@
     {
         "id": "foto",
         "name": "Fotoorienteringen",
-        "desc": "Para ihop en bild till varje kartkontroll. ",
+        "desc": "Para ihop en bild till varje kartkontroll.",
+        "visible": false,
         "length": "",
         "numericalorder": true,
-        "count": 16,
         "controlpoints": [
             [1,"c"],
             [2,"g"],
@@ -160,51 +160,103 @@
     {
         "id": "blue",
         "name": "Blå led",
-        "desc": "",
-        "length": "",
+        "desc": "Kors och tvärs genom skogarna på mellersta Vässarö. Start och mål kontroll 40 vid Lillgårn.",
+        "visible": true,
+        "length": "5.1 km",
         "numericalorder": false,
-        "count": 0,
         "controlpoints": [
+            [62,"P"],
+            [50,"V"],
+            [69,"U"],
+            [54,"C"],
+            [65,"C"],
+            [63,"H"],
+            [64,"S"],
+            [67,"N"],
+            [55,"Y"],
+            [56,"Q"],
+            [52,"O"],
+            [51,"P"],
+            [42,"D"],
+            [49,"F"]
         ]
     },
     {
         "id": "greenpath",
         "name": "Grön led på stigar",
-        "desc": "",
-        "length": "",
+        "desc": "Led som följer stigar och vägar på mellersta Vässarö. Start och mål kontroll 40 vid Lillgårn.",
+        "visible": true,
+        "length": "1.7 km",
         "numericalorder": false,
-        "count": 0,
         "controlpoints": [
+            [36,"I"],
+            [57,"X"],
+            [32,"H"],
+            [58,"K"],
+            [59,"E"],
+            [60,"L"],
+            [46,"L"],
+            [38,"E"]
         ]
     },
     {
         "id": "greenroad",
         "name": "Grön led på vägar",
-        "desc": "",
-        "length": "",
+        "desc": "Led som följer vägar på mellersta Vässarö. Start och mål kontroll 40 vid Lillgårn.",
+        "visible": true,
+        "length": "1.4 km",
         "numericalorder": false,
-        "count": 0,
         "controlpoints": [
+            [31,"R"],
+            [38,"E"],
+            [34,"Y"],
+            [49,"F"],
+            [41,"K"],
+            [36,"I"]
         ]
     },
     {
         "id": "red",
         "name": "Röd led",
-        "desc": "",
-        "length": "",
+        "desc": "Led i skogarna på mellersta Vässarö. Start och mål kontroll 40 vid Lillgårn.",
+        "visible": true,
+        "length": "3.5 km",
         "numericalorder": false,
-        "count": 0,
         "controlpoints": [
+            [49,"F"],
+            [54,"C"],
+            [42,"D"],
+            [51,"P"],
+            [52,"O"],
+            [67,"N"],
+            [47,"G"],
+            [55,"Y"],
+            [56,"Q"],
+            [53,"U"],
+            [50,"V"],
+            [62,"P"]
         ]
     },
     {
         "id": "vsk-east",
-        "name": "Östra vindskyddet",
-        "desc": "",
+        "name": "Vindskyddet Östra",
+        "desc": "Alla orienteringskontroller i närheten av vindskyddet vid Överängen.",
+        "visible": false,
         "length": "",
         "numericalorder": true,
-        "count": 0,
         "controlpoints": [
+            [60,"L"],
+            [59,"E"],
+            [63,"H"],
+            [32,"H"],
+            [58,"K"],
+            [64,"S"],
+            [84,"W"],
+            [75,"T"],
+            [93,"F"],
+            [87,"A"],
+            [71,"Z"],
+            [95,"N"]
         ]
     }
 ]
