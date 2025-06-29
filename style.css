@@ -13,8 +13,13 @@
 }
 
 body {
+    height: 100%;
+    border: 1px dashed black;
+    border-radius: 10px;
     margin: 0px;
     padding: 0px;
+    display: flex;
+    flex-direction: column;
 }
 
 h1,
@@ -167,6 +172,11 @@ td {
     padding-inline: 10px;
     border: 1px solid black;
     border-radius: 5px;
+}
+
+#courseInfo {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');

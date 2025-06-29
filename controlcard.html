@@ -17,88 +17,96 @@
 
 <body>
 
-    <h1><i class="fa fa-solid fa-compass"></i>&nbsp;Startkort
+    <h1 style="flex: 1 1 100%;"><i class="fa fa-solid fa-compass"></i>&nbsp;Startkort
     </h1>
 
-    <p>
-        <a href="./index.html"><i class="fa fa-solid fa-arrow-left"></i>&nbsp;Återvänd till startsidan</a>
-    </p>
+    <div>
+        <p>
+            <a href="./index.html"><i class="fa fa-solid fa-arrow-left"></i>&nbsp;Återvänd till startsidan</a>
+        </p>
 
-    <h2><span id="nameOfCourse"></span></h2>
+        <h2><span id="nameOfCourse"></span></h2>
 
-    <p>
-        Registrera kontroller:
-    </p>
+        <p>
+            Registrera kontroller:
+        </p>
 
-    <div class="buttonGrid" id="progressGrid">
-        <div class="progress" style="background-color: var(--green);">
-            Rätt: <span id="correctCount">0</span>
+        <div class="buttonGrid" id="progressGrid">
+            <div class="progress" style="background-color: var(--green);">
+                Rätt: <span id="correctCount">0</span>
+            </div>
+            <div class="progress" style="background-color: var(--orange);">
+                Fel: <span id="incorrectCount">0</span>
+            </div>
+            <div class="progress" style="background-color: var(--grey);">
+                Kvar: <span id="notFoundCount">?</span>
+            </div>
         </div>
-        <div class="progress" style="background-color: var(--orange);">
-            Fel: <span id="incorrectCount">0</span>
+
+        <div id="popup">
+            <span id="popupLabel">Kontroll:</span>&nbsp;
+            <input type="text" id="popupCode" placeholder="Koden på kontrollen" required autocomplete="off">&nbsp;
+            <button id="popupSubmit">Skicka in</button>
+            <button id="popupCancel">Avbryt</button>
         </div>
-        <div class="progress" style="background-color: var(--grey);">
-            Kvar: <span id="notFoundCount">?</span>
-        </div>
+
+        <div class="buttonGrid" id="controlGrid"></div>
+
+        <h2>Information</h2>
+
+        <table id="courseInfo">
+            <tbody></tbody>
+        </table>
+
+        <br>
+
+        <h2>Handledning</h2>
+
+        <p>
+            Här registrerar du kontrollerna på orienteringsleden!
+        </p>
+
+        <p>Varje kontroll ute i skogen är på din karta numrerad från 1, 2, 3, ..., men i verkligheten har de en annan
+            siffra
+            så vi kan återanvända samma kontroll på flera leder. Till exempel har kontroll 5 på den gula vägvalsbanan
+            numret
+            43. På startkortet ovan står det då "5: 43".</p>
+
+        <p>På varje kontroll hittar du en bokstav som är kontrollens "lösenkod". Tryck på kontrollen i startkortet för
+            att
+            fylla i koden. Är det rätt så blir rutan grön, annars blir den orange.</p>
+
+        <p>
+            Du startar leden genom att klicka på "Start"-knappen och matar in koden som du hittar på startkontrollen.
+            Efter
+            att
+            du hittat den sista kontrollen tar du dig till målet och klickar på "Mål"-knappen och fyller återigen i dess
+            kod. Start och mål är vanligtvis kontroll 40 vid Lillgårn.</p>
+
+        <h2>
+            Danger zone
+        </h2>
+
+        <p style="text-align: center;">
+            <button class="button" id="clearButton">
+                <i class="fa fa-solid fa-rotate-left"></i>&nbsp;Nollställ leden
+            </button>
+        </p>
+        <p style="text-align: center;">
+            <button id="deleteButton">
+                <i class="fa fa-solid fa-trash"></i>&nbsp;Radera leden
+            </button>
+        </p>
+
+        <p
+            style="text-align: center; background-color: var(--scoutblue); margin: 0px; padding: 20px; vertical-align: middle; ">
+            <i class="fa fa-solid fa-compass" style="font-size: xx-large; color: white;"></i>&nbsp;<img
+                src="img/hollyrosa.svg" alt="Hollyrosa, programpatrullens maskot." height="100px"
+                style="margin-right: 4px; position: relative; top: 6px; -webkit-filter: invert(.75); filter: invert(0.75)">
+            <a href="https://github.com/danielmartling/vook/"><i class="fa fa-solid fa-github"
+                    style="font-size: xx-large; color: white;"></i></a>
+        </p>
     </div>
-
-    <div id="popup">
-        <span id="popupLabel">Kontroll:</span>&nbsp;
-        <input type="text" id="popupCode" placeholder="Koden på kontrollen" required autocomplete="off">&nbsp;
-        <button id="popupSubmit">Skicka in</button>
-        <button id="popupCancel">Avbryt</button>
-    </div>
-
-    <div class="buttonGrid" id="controlGrid"></div>
-
-    <h2>Information</h2>
-
-    <table id="courseInfo">
-        <tbody></tbody>
-    </table>
-
-    <br>
-
-    <h2>Handledning</h2>
-
-    <p>
-        Här registrerar du kontrollerna på orienteringsleden!
-    </p>
-
-    <p>Varje kontroll ute i skogen är på din karta numrerad från 1, 2, 3, ..., men i verkligheten har de en annan siffra
-        så vi kan återanvända samma kontroll på flera leder. Till exempel har kontroll 5 på den gula vägvalsbanan numret
-        43. På startkortet ovan står det då "5: 43".</p>
-
-    <p>På varje kontroll hittar du en bokstav som är kontrollens "lösenkod". Tryck på kontrollen i startkortet för att
-        fylla i koden. Är det rätt så blir rutan grön, annars blir den orange.</p>
-
-    <p>
-        Du startar leden genom att klicka på "Start"-knappen och matar in koden som du hittar på startkontrollen. Efter
-        att
-        du hittat den sista kontrollen tar du dig till målet och klickar på "Mål"-knappen och fyller återigen i dess
-        kod. Start och mål är vanligtvis kontroll 40 vid Lillgårn.</p>
-
-    <h2>
-        Danger zone
-    </h2>
-
-    <p style="text-align: center;">
-        <button class="button" id="clearButton">
-            <i class="fa fa-solid fa-rotate-left"></i>&nbsp;Nollställ leden
-        </button>
-    </p>
-    <p style="text-align: center;">
-        <button id="deleteButton">
-            <i class="fa fa-solid fa-trash"></i>&nbsp;Radera leden
-        </button>
-    </p>
-
-    <p style="text-align: center; background-color: var(--scoutblue); margin: 0px; padding: 10px; vertical-align: middle;">
-        <i class="fa fa-solid fa-compass" style="font-size: xx-large; color: white;"></i>&nbsp;<img src="img/hollyrosa.svg"
-            alt="Hollyrosa, programpatrullens maskot." height="100px"
-            style="margin-right: 4px; position: relative; top: 6px; -webkit-filter: invert(.75); filter: invert(0.75)">
-            <a href="https://github.com/danielmartling/vook/"><i class="fa fa-solid fa-github" style="font-size: xx-large; color: white;"></i></a>
-    </p>
 
     <script>
         const storage = simpleStorage;
