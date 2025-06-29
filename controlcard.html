@@ -22,7 +22,7 @@
 
     <div>
         <p>
-            <a href="./index.html"><i class="fa fa-solid fa-arrow-left"></i>&nbsp;Återvänd till startsidan</a>
+            <a href="./"><i class="fa fa-solid fa-arrow-left"></i>&nbsp;Återvänd till startsidan</a>
         </p>
 
         <h2><span id="nameOfCourse"></span></h2>
@@ -137,7 +137,9 @@
             return allCourses.find(course => course.id === courseID);
         }
 
-        function renderGrid(course, progress) {
+        
+
+        async function renderGrid(course, progress, keys) {
 
             // Initialise grid and cells
             const grid = document.getElementById("controlGrid");
@@ -178,7 +180,8 @@
                 let correct = 0;
                 let incorrect = 0;
                 var i = 1;
-                course.controlpoints.forEach(([number, code]) => {
+
+                course.controlpoints.forEach(number => {
                     const cell = document.createElement("div");
                     cell.className = "box";
 
@@ -189,12 +192,13 @@
                     }
 
                     const found = progress.progress.find(cp => cp[0] === number);
+                    const key = decode(getKey(keys, number));
 
                     if (found) {
-                        if (found[1].toLowerCase() === code.toLowerCase()) {
+                        if (found[1].toLowerCase() === key.toLowerCase()) {
                             cell.classList.add("green");
                             correct++;
-                            cell.textContent = order + number + " - " + code.toUpperCase();
+                            cell.textContent = order + number + " - " + key.toUpperCase();
                         } else {
                             cell.classList.add("red");
                             cell.classList.add("editable");
@@ -268,8 +272,9 @@
             }
 
             let courseProgress = loadProgress(courseID);
+            let keys = await getKeys();
 
-            renderGrid(course, courseProgress);
+            await renderGrid(course, courseProgress, keys);
 
             const popup = document.getElementById("popup");
             const popupLabel = document.getElementById("popupLabel");
@@ -310,7 +315,6 @@
                 popupCode.value = "";
                 selectedNumber = null;
                 location.reload();
-
             });
 
             const infoTable = document.getElementById("courseInfo").querySelector("tbody");

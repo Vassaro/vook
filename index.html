@@ -28,6 +28,7 @@
     <p>
         På Lillgårn kan du:
     </p>
+
     <ul>
         <li>Låna eller köpa kartor.</li>
         <li>Låna kompasser, kontrollbeskrivningar och analoga startkort.</li>
@@ -37,18 +38,18 @@
     <p>
         Tips på programpass:
     </p>
+
     <ul>
-        <li>Orientering i grupp - demonstration av ledare</li>
-        <li>Parorientering - samarbeta eller tävla. Vem väljer bäst väg till nästa kontroll? Gula vägvalsbanan passar
+        <li><b>Orientering i grupp:</b> demonstration av ledare</li>
+        <li><b>Parorientering:</b> samarbeta eller tävla. Vem väljer bäst väg till nästa kontroll? Gula vägvalsbanan passar
             här!</li>
-        <li>Orientering kring plats - Hitta alla kontroller i närheten av ett område.</li>
-        <li>Nattorientering - Alla kontroller är reflekterande. Kom ihåg ficklampan!</li>
-        <li>Naturpasset / Hitta Ut - På ön finns 62 kontroller. Vem hinner hitta flest under lägertiden? Starta leden
-            "Stora orienteringen".</li>
-        <li>Gör din egen led!</li>
+        <li><b>Orientering på tid:</b> Använd startkortet för se hur lång tid du tar en led.</li>
+        <li><b>Orientering kring plats:</b> Hitta alla kontroller i närheten av ett område.</li>
+        <li><b>Nattorientering:</b> Alla kontroller är reflekterande. Kom ihåg ficklampan!</li>
+        <li><b>Naturpasset / Hitta Ut:</b> På ön finns 62 kontroller. Vem hinner hitta flest under lägertiden? Starta leden
+            "Stora orienteringen" eller "Mellersta Vässarö".</li>
+        <li><b>Gör din egen led:</b> Låna en karta och välj kontroller själv.</li>
     </ul>
-
-
 
     <div id="newCourseGrid">
         <button id="startNewCourseButton" class="button" style="width: 200px ;margin-left: calc(100% - 200px);"><i
@@ -62,11 +63,13 @@
     <h2>Här listas dina orienteringsleder:</h2>
     <div id="courseGrid"></div>
 
-    <p style="text-align: center; background-color: var(--scoutblue); margin: 0px; padding: 10px; vertical-align: middle;">
-        <i class="fa fa-solid fa-compass" style="font-size: xx-large; color: white;"></i>&nbsp;<img src="img/hollyrosa.svg"
-            alt="Hollyrosa, programpatrullens maskot." height="100px"
+    <p
+        style="text-align: center; background-color: var(--scoutblue); margin: 0px; padding: 10px; vertical-align: middle;">
+        <i class="fa fa-solid fa-compass" style="font-size: xx-large; color: white;"></i>&nbsp;<img
+            src="img/hollyrosa.svg" alt="Hollyrosa, programpatrullens maskot." height="100px"
             style="margin-right: 4px; position: relative; top: 6px; -webkit-filter: invert(.75); filter: invert(0.75)">
-            <a href="https://github.com/danielmartling/vook/"><i class="fa fa-solid fa-github" style="font-size: xx-large; color: white;"></i></a>
+        <a href="https://github.com/danielmartling/vook/"><i class="fa fa-solid fa-github"
+                style="font-size: xx-large; color: white;"></i></a>
     </p>
 
     <script>
@@ -86,6 +89,7 @@
 
         // Show started courses in a list
         async function renderCourseGrid() {
+            let keys = await getKeys();
             const container = document.getElementById("courseGrid");
 
             // Get and sort started courses by name
@@ -112,12 +116,18 @@
                     const progress = started.progress || [];
                     // Count how many found controls are correct
                     const correctCount = progress.filter(entry => {
-                        const real = thisCourse.controlpoints.find(cp => cp[0] === entry[0]);
-                        return real && real[1].toLowerCase() === entry[1].toLowerCase();
+                        const real = thisCourse.controlpoints.find(cp => cp === entry[0]);
+                        return real && decode(getKey(keys, real)).toLowerCase() === entry[1].toLowerCase();
                     }).length;
 
                     const div = document.createElement("div");
-                    div.className = "course";
+                    if (started.finished) {
+                        console.log("KLAR");
+                        div.className = "course finished";
+                    } else {
+                        div.className = "course";
+                    };
+
                     div.onclick = () => window.location.href = `controlcard.html?id=${thisCourse.id}`;
 
                     div.innerHTML = `
@@ -157,16 +167,14 @@
                         ${started.started ? `
                         <div class="tp">
                             <span class="tl">Tid:</span>&nbsp;
-                            <span class="tv">${started.finished 
-                                ? getDuration(started.startedAt, started.finishedAt) 
+                            <span class="tv">${started.finished
+                                ? getDuration(started.startedAt, started.finishedAt)
                                 : getDuration(started.startedAt, new Date())}</span>
                         </div>
                         ` : ""}
                     `
                     div.appendChild(infoGrid);
                 });
-
-
         }
 
         function getAllCourses() {
@@ -216,8 +224,6 @@
                 });
         }
 
-
-
         function startCourse(course) {
             const startedCourses = getStartedCourses();
             startedCourses.push({
@@ -225,11 +231,8 @@
                 name: course.name,
                 started: false,
                 startedAt: null,
-                // startedAt: new Date().toLocaleString("sv-SE"),
-                // startedAt: new Date(),
                 finished: false,
                 finishedAt: null,
-                // finishedAt: new Date(Date.UTC(2025, 6, 29, 12, 0, 0)),
                 progress: []
             });
             saveStartedCourses(startedCourses);
@@ -239,7 +242,6 @@
 
         document.getElementById("startNewCourseButton").addEventListener("click", getAllCourses);
 
-        // Init
         renderCourseGrid();
 
     </script>

@@ -36,6 +36,10 @@ p {
     padding-right: 20px;
 }
 
+ul {
+    margin-top: 0px;
+}
+
 #newCourseGrid,
 #courseGrid {
     padding: 20px;
@@ -54,6 +58,10 @@ button {
     cursor: pointer;
 }
 
+button:hover {
+    filter: brightness(90%);
+}
+
 .course {
     padding: 20px;
     background-color: white;
@@ -63,9 +71,12 @@ button {
 }
 
 .course:hover {
-    background-color: var(--grey);
+    filter: brightness(90%);
 }
 
+.finished {
+    background-color: var(--green);
+}
 
 #clearButton,
 #deleteButton {
@@ -85,7 +96,6 @@ button {
     justify-items: auto;
     /* grid-template-columns: repeat(auto-fit, 1fr); */
     gap: 10px;
-    background-color: white;
 }
 
 @media screen and (orientation: landscape) {
@@ -101,7 +111,7 @@ button {
 
 .tp .tl {
     font-weight: bold;
-    color: var(--scoutblue);
+    color: black;
 }
 
 .tp .tv {
@@ -135,6 +145,10 @@ button {
 .editable {
     border: 2px dashed var(--scoutblue);
     cursor: pointer;
+}
+
+.editable:hover {
+    filter: brightness(90%);
 }
 
 #popup {
