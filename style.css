@@ -25,6 +25,7 @@ h2 {
     background-color: var(--scoutblue);
     color: white;
     margin-top: 0px;
+    margin-bottom: 0px;
     padding-left: 20px;
     padding-bottom: 10px;
     padding-top: 10px;
@@ -175,6 +176,7 @@ td {
 #courseInfo {
     margin-left: 10px;
     margin-right: 10px;
+    margin-top: 20px;
 }
 
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
