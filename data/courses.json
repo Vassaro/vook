@@ -2,7 +2,7 @@
     {
         "id": "all",
         "name": "Stora orienteringen",
-        "desc": "Alla vanliga orienteringskontroller på Vässarö. Du väljer själv i vilken ordning du tar kontrollerna.",
+        "desc": "Alla orienteringskontroller på hela Vässarö. Du väljer själv i vilken ordning du tar kontrollerna.",
         "visible": true,
         "length": "- km",
         "numericalorder": true,
@@ -211,7 +211,7 @@
     {
         "id": "middle",
         "name": "Mellersta Vässarö",
-        "desc": "Alla orienteringskontroller på kartan 'Mellersta Vässarö'.",
+        "desc": "Alla orienteringskontroller på kartan 'Mellersta Vässarö'. Du väljer själv i vilken ordning du tar kontrollerna.",
         "visible": true,
         "length": "- km",
         "numericalorder": true,
@@ -261,7 +261,7 @@
         "name": "Vässarö Runt",
         "desc": "Alla orienteringskontroller längs med eller strax bredvid vandringsstigen 'Vässarö Runt'. Stigen är markerad med orange. Start Lillgårn, sedan går leden moturs runt hela ön från Skrakviksängen, och till sist mål på Lillgårn.",
         "visible": true,
-        "length": "8 km",
+        "length": "ca. 8 km",
         "numericalorder": false,
         "controlpoints": [
             34,
