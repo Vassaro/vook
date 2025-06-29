@@ -36,6 +36,11 @@ p {
     padding-right: 20px;
 }
 
+ul {
+    margin-top: 0px;
+}
+
+
 #newCourseGrid,
 #courseGrid {
     padding: 20px;
@@ -44,7 +49,7 @@ p {
 }
 
 button {
-    font-size: 1em;
+    font-size: 1.2em;
     font-weight: bold;
     color: white;
     background-color: var(--pink);
@@ -52,6 +57,10 @@ button {
     border: 0px;
     padding: 20px;
     cursor: pointer;
+}
+
+button:hover {
+    filter: brightness(90%);
 }
 
 .course {
@@ -63,9 +72,12 @@ button {
 }
 
 .course:hover {
-    background-color: var(--grey);
+    filter: brightness(90%);
 }
 
+.finished {
+    background-color: var(--green);
+}
 
 #clearButton,
 #deleteButton {
@@ -85,7 +97,7 @@ button {
     justify-items: auto;
     /* grid-template-columns: repeat(auto-fit, 1fr); */
     gap: 10px;
-    background-color: white;
+    background-color: transparent;
 }
 
 @media screen and (orientation: landscape) {
@@ -101,7 +113,7 @@ button {
 
 .tp .tl {
     font-weight: bold;
-    color: var(--scoutblue);
+    color: black;
 }
 
 .tp .tv {
@@ -137,15 +149,19 @@ button {
     cursor: pointer;
 }
 
+.editable:hover {
+    filter: brightness(90%);
+}
+
 #popup {
     display: none;
     background: var(--scoutblue);
     color: white;
     border-radius: 10px;
-    padding: 10px;
+    padding: 20px;
     margin: 10px;
     position: relative;
-
+    text-align: center;
 }
 
 .progress {
@@ -159,6 +175,7 @@ button {
 
 #popupLabel {
     font-weight: bold;
+    font-size: 1.2em;
 }
 
 table,
@@ -177,6 +194,27 @@ td {
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.imageBox {
+    position: relative;
+    background-image: url("img/svan.png");
+    background-size: cover;
+    background-position: center;
+    height: 800px;
+    overflow: hidden;
+}
+
+.textBox {
+    position: absolute;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    color: black;
+    padding: 0px;
+    margin: 20px;
+    box-sizing: border-box;
+    font-size: 1em;
 }
 
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');

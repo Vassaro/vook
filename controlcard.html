@@ -17,96 +17,98 @@
 
 <body>
 
-    <h1 style="flex: 1 1 100%;"><i class="fa fa-solid fa-compass"></i>&nbsp;Startkort
-    </h1>
+    <h1><i class="fa fa-solid fa-compass"></i>&nbsp;Startkort</h1>
 
-    <div>
-        <p>
-            <a href="./index.html"><i class="fa fa-solid fa-arrow-left"></i>&nbsp;Återvänd till startsidan</a>
-        </p>
 
-        <h2><span id="nameOfCourse"></span></h2>
+    <p>
+        <a href="./"><i class="fa fa-solid fa-arrow-left"></i>&nbsp;Återvänd till startsidan</a>
+    </p>
 
-        <p>
-            Registrera kontroller:
-        </p>
+    <h2><span id="nameOfCourse"></span></h2>
 
-        <div class="buttonGrid" id="progressGrid">
-            <div class="progress" style="background-color: var(--green);">
-                Rätt: <span id="correctCount">0</span>
-            </div>
-            <div class="progress" style="background-color: var(--orange);">
-                Fel: <span id="incorrectCount">0</span>
-            </div>
-            <div class="progress" style="background-color: var(--grey);">
-                Kvar: <span id="notFoundCount">?</span>
-            </div>
+
+    <p>
+        Registrera kontroller:
+    </p>
+
+    <div class="buttonGrid" id="progressGrid">
+        <div class="progress" style="background-color: var(--green);">
+            Rätt: <span id="correctCount">0</span>
         </div>
-
-        <div id="popup">
-            <span id="popupLabel">Kontroll:</span>&nbsp;
-            <input type="text" id="popupCode" placeholder="Koden på kontrollen" required autocomplete="off">&nbsp;
-            <button id="popupSubmit">Skicka in</button>
-            <button id="popupCancel">Avbryt</button>
+        <div class="progress" style="background-color: var(--orange);">
+            Fel: <span id="incorrectCount">0</span>
         </div>
-
-        <div class="buttonGrid" id="controlGrid"></div>
-
-        <h2>Information</h2>
-
-        <table id="courseInfo">
-            <tbody></tbody>
-        </table>
-
-        <br>
-
-        <h2>Handledning</h2>
-
-        <p>
-            Här registrerar du kontrollerna på orienteringsleden!
-        </p>
-
-        <p>Varje kontroll ute i skogen är på din karta numrerad från 1, 2, 3, ..., men i verkligheten har de en annan
-            siffra
-            så vi kan återanvända samma kontroll på flera leder. Till exempel har kontroll 5 på den gula vägvalsbanan
-            numret
-            43. På startkortet ovan står det då "5: 43".</p>
-
-        <p>På varje kontroll hittar du en bokstav som är kontrollens "lösenkod". Tryck på kontrollen i startkortet för
-            att
-            fylla i koden. Är det rätt så blir rutan grön, annars blir den orange.</p>
-
-        <p>
-            Du startar leden genom att klicka på "Start"-knappen och matar in koden som du hittar på startkontrollen.
-            Efter
-            att
-            du hittat den sista kontrollen tar du dig till målet och klickar på "Mål"-knappen och fyller återigen i dess
-            kod. Start och mål är vanligtvis kontroll 40 vid Lillgårn.</p>
-
-        <h2>
-            Danger zone
-        </h2>
-
-        <p style="text-align: center;">
-            <button class="button" id="clearButton">
-                <i class="fa fa-solid fa-rotate-left"></i>&nbsp;Nollställ leden
-            </button>
-        </p>
-        <p style="text-align: center;">
-            <button id="deleteButton">
-                <i class="fa fa-solid fa-trash"></i>&nbsp;Radera leden
-            </button>
-        </p>
-
-        <p
-            style="text-align: center; background-color: var(--scoutblue); margin: 0px; padding: 20px; vertical-align: middle; ">
-            <i class="fa fa-solid fa-compass" style="font-size: xx-large; color: white;"></i>&nbsp;<img
-                src="img/hollyrosa.svg" alt="Hollyrosa, programpatrullens maskot." height="100px"
-                style="margin-right: 4px; position: relative; top: 6px; -webkit-filter: invert(.75); filter: invert(0.75)">
-            <a href="https://github.com/danielmartling/vook/"><i class="fa fa-solid fa-github"
-                    style="font-size: xx-large; color: white;"></i></a>
-        </p>
+        <div class="progress" style="background-color: var(--grey);">
+            Kvar: <span id="notFoundCount">?</span>
+        </div>
     </div>
+
+    <div id="popup">
+        <span id="popupLabel"></span>&nbsp;
+        <input type="text" id="popupCode" placeholder="Kod" required autocomplete="off"
+            style="width: 50px; height: 30px; font-size: 1.2em;">&nbsp;
+        <button id="popupSubmit">Skicka in</button>&nbsp;
+        <button id="popupCancel">Avbryt</button>
+    </div>
+
+    <div class="buttonGrid" id="controlGrid"></div>
+
+    <h2>Information</h2>
+
+    <table id="courseInfo">
+        <tbody></tbody>
+    </table>
+
+    <br>
+
+    <h2>Handledning</h2>
+
+    <p>
+        Här registrerar du kontrollerna på orienteringsleden!
+    </p>
+
+    <p>Varje kontroll ute i skogen är på din karta numrerad från 1, 2, 3, ..., men i verkligheten har de en annan
+        siffra
+        så vi kan återanvända samma kontroll på flera leder. Till exempel har kontroll 5 på den gula vägvalsbanan
+        numret
+        43. På startkortet ovan står det då "5: 43".</p>
+
+    <p>På varje kontroll hittar du en bokstav som är kontrollens "lösenkod". Tryck på kontrollen i startkortet för
+        att
+        fylla i koden. Är det rätt så blir rutan grön, annars blir den orange.</p>
+
+    <p>
+        Du startar leden genom att klicka på "Start"-knappen och matar in koden som du hittar på startkontrollen.
+        Efter
+        att
+        du hittat den sista kontrollen tar du dig till målet och klickar på "Mål"-knappen och fyller återigen i dess
+        kod. Start och mål är vanligtvis kontroll 40 vid Lillgårn.</p>
+
+    <h2>
+        Danger zone
+    </h2>
+
+    <p style="text-align: center;">
+        <button class="button" id="clearButton">
+            <i class="fa fa-solid fa-rotate-left"></i>&nbsp;Nollställ leden
+        </button>
+    </p>
+    <p style="text-align: center;">
+        <button id="deleteButton">
+            <i class="fa fa-solid fa-trash"></i>&nbsp;Radera leden
+        </button>
+    </p>
+
+    <p style="display: flex; flex-direction: row; align-items: center; justify-content: center; background-color: var(--scoutblue); margin: 0px; padding: 20px; vertical-align: middle; ">
+        <img src="img/Scoutsymbolen_white.png" alt="Scouternas logga." height="75px"
+            style="margin-right: 4px; position: relative; top: 6px;">&nbsp;
+        <img src="img/hollyrosa.svg" alt="Hollyrosa, programpatrullens maskot." height="100px"
+            style="margin-right: 4px; position: relative; top: 6px; -webkit-filter: invert(0.75); filter: invert(0.75)">&nbsp;
+        <img src="img/vassaro.svg" alt="Vässarös logga." height="100px"
+            style="margin-right: 4px; position: relative; top: 6px; -webkit-filter: invert(0.75); filter: invert(0.75)">&nbsp;
+        <a href="https://github.com/danielmartling/vook/" title="Du kan hjälpa till med den här hemsidan!"><i class="fa fa-solid fa-github"
+            style="font-size: xx-large; color: white;"></i></a>
+    </p>
 
     <script>
         const storage = simpleStorage;
@@ -137,7 +139,9 @@
             return allCourses.find(course => course.id === courseID);
         }
 
-        function renderGrid(course, progress) {
+
+
+        async function renderGrid(course, progress, keys) {
 
             // Initialise grid and cells
             const grid = document.getElementById("controlGrid");
@@ -178,7 +182,8 @@
                 let correct = 0;
                 let incorrect = 0;
                 var i = 1;
-                course.controlpoints.forEach(([number, code]) => {
+
+                course.controlpoints.forEach(number => {
                     const cell = document.createElement("div");
                     cell.className = "box";
 
@@ -189,12 +194,13 @@
                     }
 
                     const found = progress.progress.find(cp => cp[0] === number);
+                    const key = decode(getKey(keys, number));
 
                     if (found) {
-                        if (found[1].toLowerCase() === code.toLowerCase()) {
+                        if (found[1].toLowerCase() === key.toLowerCase()) {
                             cell.classList.add("green");
                             correct++;
-                            cell.textContent = order + number + " - " + code.toUpperCase();
+                            cell.textContent = order + number + " - " + key.toUpperCase();
                         } else {
                             cell.classList.add("red");
                             cell.classList.add("editable");
@@ -210,8 +216,8 @@
                     if (!cell.classList.contains("green")) {
                         cell.addEventListener("click", () => {
                             selectedNumber = number;
-                            popupLabel.textContent = `Kontroll ${number}:`;
-                            popupCode.value = found ? found[1] : "";
+                            popupLabel.textContent = `${number}:`;
+                            popupCode.value = found ? found[1].toUpperCase() : "";
                             popup.style.display = "block";
                             popupCode.focus();
                         });
@@ -268,8 +274,9 @@
             }
 
             let courseProgress = loadProgress(courseID);
+            let keys = await getKeys();
 
-            renderGrid(course, courseProgress);
+            await renderGrid(course, courseProgress, keys);
 
             const popup = document.getElementById("popup");
             const popupLabel = document.getElementById("popupLabel");
@@ -310,7 +317,6 @@
                 popupCode.value = "";
                 selectedNumber = null;
                 location.reload();
-
             });
 
             const infoTable = document.getElementById("courseInfo").querySelector("tbody");
