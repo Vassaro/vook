@@ -1,110 +1,116 @@
 :root {
-    --green: #41a62a;
-    --orange: #e95f13;
+    /* --green: #41a62a; */
+    --green: #53cd30;
+    --orange: #ef7939;
+    /* --orange: #e95f13; */
     --blue: #00a8e1;
+    --grey: #d9e1e7;
+    --pink: #da005e;
+    --yellow: #e2e000;
+    --scoutblue: #003660;
+    --buttoncolor: #d14700;
+    font-family: 'Open Sans', sans-serif;
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
-    padding: 20px;
+    margin: 0px;
+    padding: 0px;
 }
 
 h1,
-h2,
-h3,
-p,
-a {
-    padding-left: 10px;
+h2 {
+    background-color: var(--scoutblue);
+    color: white;
+    margin-top: 0px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 
-.course {
-    padding: 10px;
-    background-color: #ddd;
-    margin: 5px 0;
-    border-radius: 6px;
-    cursor: pointer;
+p {
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
-#newCourse {
-    display: none;
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px dashed #aaa;
-    border-radius: 10px;
-    background-color: #f9f9f9;
+#newCourseGrid,
+#courseGrid {
+    padding: 20px;
+    padding-left: 20px;
+    background-color: var(--scoutblue);
 }
 
 button {
-    padding: 10px;
     font-size: 1em;
-    text-align: center;
-    border-radius: 10px;
-    background-color: lightgray;
     font-weight: bold;
-}
-
-#clearButton,
-#deleteButton {
-    background-color: var(--orange);
-    color: black;
-    border: none;
+    color: white;
+    background-color: var(--pink);
     border-radius: 10px;
+    border: 0px;
+    padding: 20px;
     cursor: pointer;
-    padding: 10px;
-}
-
-#startNewCourse {
-    background-color: ddd;
-    color: black;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    text-align: left;
-    margin-left: 10px;
-}
-
-#startNewCourse:hover {
-    background-color: #eee;
-}
-
-#startedCourses {
-    border: 1px dashed #aaa;
-    border-radius: 10px;
-    display: grid;
-    background-color: #f9f9f9;
-    margin-top: 10px;
-    padding: 10px;
 }
 
 .course {
-    background-color: #eee;
-    padding: 10px;
+    padding: 20px;
+    background-color: white;
+    margin: 5px 0;
     border-radius: 10px;
     cursor: pointer;
 }
 
 .course:hover {
-    background-color: #ddd;
+    background-color: var(--grey);
 }
 
-#controlGrid,
-#progressGrid,
-#buttonGrid {
+
+#clearButton,
+#deleteButton {
+    width: 200px;
+}
+
+.buttonGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 10px;
     margin: 10px;
 }
 
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    justify-items: auto;
+    /* grid-template-columns: repeat(auto-fit, 1fr); */
+    gap: 10px;
+    background-color: white;
+}
+
+@media screen and (orientation: landscape) {
+    .info-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        /* grid-template-columns: repeat(auto-fit, 1fr); */
+    }
+}
+
+.tp {
+    display: flex;
+}
+
+.tp .tl {
+    font-weight: bold;
+    color: var(--scoutblue);
+}
+
+.tp .tv {
+    color: black;
+}
 
 .box {
     padding: 10px;
     text-align: center;
     color: black;
     font-size: 1.2em;
-    border-radius: 10px;
     font-weight: bold;
+    border-radius: 10px;
 }
 
 .green {
@@ -115,26 +121,27 @@ button {
 .red {
     background-color: var(--orange);
     color: black;
-    cursor: pointer;
 }
 
 .gray {
-    background-color: var(--blue);
+    background-color: var(--grey);
     color: black;
-    cursor: pointer;
 }
 
 .editable {
-    border: 2px dashed white;
+    border: 2px dashed var(--scoutblue);
     cursor: pointer;
 }
 
 #popup {
     display: none;
-    background: var(--blue);
+    background: var(--scoutblue);
+    color: white;
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
+    position: relative;
+
 }
 
 .progress {
@@ -153,9 +160,13 @@ button {
 table,
 th,
 td {
-    padding: 10px;
     vertical-align: top;
-    border-collapse: collapse;
+}
+
+td {
+    padding-inline: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
 }
 
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');

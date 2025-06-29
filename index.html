@@ -12,81 +12,174 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" href="style.css">
+    <script src="scripts.js"></script>
 </head>
 
 <body>
-    <hr>
 
     <h1>
-        Orientering på Vässarö
+        <i class="fa fa-solid fa-compass"></i>&nbsp;Vässarö Orientering
     </h1>
 
-    <hr>
+    <p>
+        På ön finns det 62 orienteringskontroller och 6 leder i olika svårighetsgrader. Kontrollerna är utmärkta med en
+        röd och vit cylinder. Varje kontroll har ett identifieringsnummer och en kodbokstav.
+    </p>
+    <p>
+        På Lillgårn kan du:
+    </p>
+    <ul>
+        <li>Låna eller köpa kartor.</li>
+        <li>Låna kompasser, kontrollbeskrivningar och analoga startkort.</li>
+        <li>Få mer information!</li>
+    </ul>
 
-    <button id="startNewCourse"><i class="fa fa-solid fa-plus"></i> Starta ny led</button>
+    <p>
+        Tips på programpass:
+    </p>
+    <ul>
+        <li>Orientering i grupp - demonstration av ledare</li>
+        <li>Parorientering - samarbeta eller tävla. Vem väljer bäst väg till nästa kontroll? Gula vägvalsbanan passar
+            här!</li>
+        <li>Orientering kring plats - Hitta alla kontroller i närheten av ett område.</li>
+        <li>Nattorientering - Alla kontroller är reflekterande. Kom ihåg ficklampan!</li>
+        <li>Naturpasset / Hitta Ut - På ön finns 62 kontroller. Vem hinner hitta flest under lägertiden? Starta leden
+            "Stora orienteringen".</li>
+        <li>Gör din egen led!</li>
+    </ul>
 
-    <div id="newCourse">
-        <p>Välj en led att starta:</p>
-        <div id="availableCourses"></div>
+
+
+    <div id="newCourseGrid">
+        <button id="startNewCourseButton" class="button" style="width: 200px ;margin-left: calc(100% - 200px);"><i
+                class="fa fa-solid fa-plus"></i>&nbsp;Starta ny led</button>
+        <div id="newCourse">
+            <!-- Välj en led att starta: -->
+            <div id="availableCourses"></div>
+        </div>
     </div>
 
-    <div id="startedCourses"></div>
+    <div id="courseGrid">
+        <h2>Här listas dina orienteringsleder:</h2>
+    </div>
 
-    <hr>
+    <p style="text-align: center; background-color: var(--scoutblue); margin: 0px; padding: 10px; vertical-align: middle;">
+        <i class="fa fa-solid fa-compass" style="font-size: xx-large; color: white;"></i>&nbsp;<img src="img/hollyrosa.svg"
+            alt="Hollyrosa, programpatrullens maskot." height="100px"
+            style="margin-right: 4px; position: relative; top: 6px; -webkit-filter: invert(.75); filter: invert(0.75)">
+            <a href="https://github.com/danielmartling/vook/"><i class="fa fa-solid fa-github" style="font-size: xx-large; color: white;"></i></a>
+    </p>
 
     <script>
+
+        // Local storage
         const storage = simpleStorage;
 
+        // Retrieve data of courses started by the user from local storage, or an empty array.
         function getStartedCourses() {
             return storage.get("startedCourses") || [];
         };
 
+        // Save current data of started courses into storage.
         function saveStartedCourses(courses) {
             storage.set("startedCourses", courses);
         }
 
-        async function showStartedCourses() {
-            const container = document.getElementById("startedCourses");
+        // Show started courses in a list
+        async function renderCourseGrid() {
+            const container = document.getElementById("courseGrid");
 
-            const startedCourses = getStartedCourses();
+            // Get and sort started courses by name
+            const startedCourses = getStartedCourses()
+                .sort((a, b) => a.name.localeCompare(b.name));
+
+            // Show warning if no courses are started
             if (startedCourses.length === 0) {
-                container.innerHTML += "<p><i>Du har inga pågående leder.</i></p>";
+                container.style = "color: white;";
+                container.innerHTML += "<i>Du har inga pågående leder.</i>";
                 return;
             }
 
+            // Get json data of all courses
             const response = await fetch("data/courses.json");
             const allCourses = await response.json();
 
             startedCourses
-                .sort((a, b) => a.name.localeCompare(b.name))
                 .forEach(started => {
-                    const course = allCourses.find(c => c.id === started.id);
-                    if (!course) return;
+                    // Find course in json data
+                    const thisCourse = allCourses.find(c => c.id === started.id);
+                    if (!thisCourse) return;
 
-                    const progress = simpleStorage.get(course.id) || [];
+                    const progress = started.progress || [];
+                    // Count how many found controls are correct
                     const correctCount = progress.filter(entry => {
-                        const real = course.controlpoints.find(cp => cp[0] === entry.number);
-                        return real && real[1].toLowerCase() === entry.code.toLowerCase();
+                        const real = thisCourse.controlpoints.find(cp => cp[0] === entry[0]);
+                        return real && real[1].toLowerCase() === entry[1].toLowerCase();
                     }).length;
 
                     const div = document.createElement("div");
                     div.className = "course";
-                    div.onclick = () => window.location.href = `controlcard.html?id=${course.id}`;
+                    div.onclick = () => window.location.href = `controlcard.html?id=${thisCourse.id}`;
 
                     div.innerHTML = `
-                        <i class="fa fa-solid fa-compass"></i>
-                        <b><strong>${course.name}</strong></b><br>
-                        Längd: ${course.length || "-"}<br>
-                        Avklarade: ${correctCount} / ${course.controlpoints.length}
-                    `;
+                        <strong><i class="fa fa-solid fa-compass"></i>&nbsp;${thisCourse.name}</strong><br>
+                        `;
+
                     container.appendChild(div);
+
+                    const infoGrid = document.createElement("div");
+                    infoGrid.className = "infoGrid";
+
+                    infoGrid.innerHTML = `
+                        <div class="tp">
+                            <span class="tl">Längd:</span>&nbsp;
+                            <span class="tv">${thisCourse.length || "-"}</span>
+                        </div>
+                        
+                        <div class="tp">
+                            <span class="tl">Kontroller:</span>&nbsp;
+                            <span class="tv">${correctCount} / ${thisCourse.controlpoints.length}</span>
+                        </div>
+                        
+                        ${started.started ? `
+                        <div class="tp">
+                            <span class="tl">Start:</span>&nbsp;
+                            <span class="tv">${new Date(started.startedAt).toLocaleString("sv-SE")}</span>
+                        </div>
+                        ` : ""}
+
+                        ${started.finished ? `
+                        <div class="tp">
+                            <span class="tl">Mål:</span>&nbsp;
+                            <span class="tv">${new Date(started.finishedAt).toLocaleString("sv-SE")}</span>
+                        </div>
+                        ` : ""}
+
+                        ${started.started ? `
+                        <div class="tp">
+                            <span class="tl">Tid:</span>&nbsp;
+                            <span class="tv">${started.finished 
+                                ? getDuration(started.startedAt, started.finishedAt) 
+                                : getDuration(started.startedAt, new Date())}</span>
+                        </div>
+                        ` : ""}
+                    `
+                    div.appendChild(infoGrid);
                 });
+
+
         }
 
         function getAllCourses() {
             const newCourseDiv = document.getElementById("newCourse");
-            newCourseDiv.style.display = newCourseDiv.style.display === "none" ? "block" : "none";
-            if (newCourseDiv.style.display === "none") return;
+            const isVisible = newCourseDiv.style.display === "block";
+            newCourseDiv.style.display = isVisible ? "none" : "block";
+
+            document.getElementById("startNewCourseButton").innerHTML = isVisible
+                ? '<i class="fa fa-solid fa-plus"></i>&nbsp;Starta ny led'
+                : '<i class="fa fa-solid fa-times"></i>&nbsp;Stäng';
+
+            if (isVisible) return;
 
             fetch("data/courses.json")
                 .then(res => res.json())
@@ -107,8 +200,8 @@
                             div.onclick = () => startCourse(course);
 
                             div.innerHTML = `
-                                <i class="fa fa-solid fa-plus"></i>
-                                <b><strong>${course.name}:</strong></b>
+                                <strong><i class="fa fa-solid fa-plus"></i>&nbsp;
+                                ${course.name}:</strong>
                                 ${course.length + "," || "-"}
                                 ${course.controlpoints.length} kontroller<br>
                                 ${course.desc || "-"}
@@ -118,6 +211,7 @@
                         });
 
                     if (availableCoursesDiv.innerHTML === "") {
+                        availableCoursesDiv.style = "color: white";
                         availableCoursesDiv.innerHTML = "<p><i>Inga fler leder att starta.</i></p>";
                     }
                 });
@@ -127,15 +221,28 @@
 
         function startCourse(course) {
             const startedCourses = getStartedCourses();
-            startedCourses.push({ id: course.id, name: course.name });
+            startedCourses.push({
+                id: course.id,
+                name: course.name,
+                started: false,
+                startedAt: null,
+                // startedAt: new Date().toLocaleString("sv-SE"),
+                // startedAt: new Date(),
+                finished: false,
+                finishedAt: null,
+                // finishedAt: new Date(Date.UTC(2025, 6, 29, 12, 0, 0)),
+                progress: []
+            });
             saveStartedCourses(startedCourses);
             document.getElementById("newCourse").style.display = "none";
             window.location.href = `controlcard.html?id=${course.id}`;
         }
 
-        document.getElementById("startNewCourse").addEventListener("click", getAllCourses);
+        document.getElementById("startNewCourseButton").addEventListener("click", getAllCourses);
 
-        showStartedCourses();
+        // Init
+        renderCourseGrid();
+
     </script>
 </body>
 

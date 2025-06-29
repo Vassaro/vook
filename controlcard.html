@@ -12,50 +12,58 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" href="style.css">
+    <script src="scripts.js"></script>
 </head>
 
 <body>
 
-    <a href="./index.html">Återvänd till startsidan</a>
+    <h1><i class="fa fa-solid fa-compass"></i>&nbsp;Startkort
+    </h1>
 
-    <hr>
+    <p>
+        <a href="./index.html"><i class="fa fa-solid fa-arrow-left"></i>&nbsp;Återvänd till startsidan</a>
+    </p>
 
-    <h1>Startkort<span id="nameOfCourse"></span></h1>
+    <h2><span id="nameOfCourse"></span></h2>
 
-    <div id="popup">
-        <span id="popupLabel">Kontroll:</span>
-        <input type="text" id="popupCode" placeholder="Koden på kontrollen" required autocomplete="off">
-        <button id="popupSubmit">Skicka in</button>
-        <button id="popupCancel">Avbryt</button>
-    </div>
+    <p>
+        Registrera kontroller:
+    </p>
 
-    <div id="progressGrid">
+    <div class="buttonGrid" id="progressGrid">
         <div class="progress" style="background-color: var(--green);">
             Rätt: <span id="correctCount">0</span>
         </div>
         <div class="progress" style="background-color: var(--orange);">
             Fel: <span id="incorrectCount">0</span>
         </div>
-        <div class="progress" style="background-color: var(--blue);">
+        <div class="progress" style="background-color: var(--grey);">
             Kvar: <span id="notFoundCount">?</span>
         </div>
     </div>
 
-    <hr>
+    <div id="popup">
+        <span id="popupLabel">Kontroll:</span>&nbsp;
+        <input type="text" id="popupCode" placeholder="Koden på kontrollen" required autocomplete="off">&nbsp;
+        <button id="popupSubmit">Skicka in</button>
+        <button id="popupCancel">Avbryt</button>
+    </div>
 
-    <div id="controlGrid"></div>
+    <div class="buttonGrid" id="controlGrid"></div>
 
-    <hr>
-
-    <h3>Information</h3>
+    <h2>Information</h2>
 
     <table id="courseInfo">
         <tbody></tbody>
     </table>
 
-    <hr>
+    <br>
 
-    <h3>Handledning</h3>
+    <h2>Handledning</h2>
+
+    <p>
+        Här registrerar du kontrollerna på orienteringsleden!
+    </p>
 
     <p>Varje kontroll ute i skogen är på din karta numrerad från 1, 2, 3, ..., men i verkligheten har de en annan siffra
         så vi kan återanvända samma kontroll på flera leder. Till exempel har kontroll 5 på den gula vägvalsbanan numret
@@ -64,29 +72,50 @@
     <p>På varje kontroll hittar du en bokstav som är kontrollens "lösenkod". Tryck på kontrollen i startkortet för att
         fylla i koden. Är det rätt så blir rutan grön, annars blir den orange.</p>
 
-    <hr>
+    <p>
+        Du startar leden genom att klicka på "Start"-knappen och matar in koden som du hittar på startkontrollen. Efter
+        att
+        du hittat den sista kontrollen tar du dig till målet och klickar på "Mål"-knappen och fyller återigen i dess
+        kod. Start och mål är vanligtvis kontroll 40 vid Lillgårn.</p>
 
-    <div id="buttonGrid">
-        <button id="clearButton">
-            Nollställ leden
+    <h2>
+        Danger zone
+    </h2>
+
+    <p style="text-align: center;">
+        <button class="button" id="clearButton">
+            <i class="fa fa-solid fa-rotate-left"></i>&nbsp;Nollställ leden
         </button>
-
+    </p>
+    <p style="text-align: center;">
         <button id="deleteButton">
-            Radera leden
+            <i class="fa fa-solid fa-trash"></i>&nbsp;Radera leden
         </button>
-    </div>
+    </p>
+
+    <p style="text-align: center; background-color: var(--scoutblue); margin: 0px; padding: 10px; vertical-align: middle;">
+        <i class="fa fa-solid fa-compass" style="font-size: xx-large; color: white;"></i>&nbsp;<img src="img/hollyrosa.svg"
+            alt="Hollyrosa, programpatrullens maskot." height="100px"
+            style="margin-right: 4px; position: relative; top: 6px; -webkit-filter: invert(.75); filter: invert(0.75)">
+            <a href="https://github.com/danielmartling/vook/"><i class="fa fa-solid fa-github" style="font-size: xx-large; color: white;"></i></a>
+    </p>
 
     <script>
-
         const storage = simpleStorage;
-        const courseID = getCourseID();
 
-        function loadCourse(courseID) {
-            return storage.get(courseID) || [];
+        function loadProgress(courseID) {
+            return storage.get("startedCourses").find(c => c.id === courseID)
         };
 
-        function saveCourse(courseID, course) {
-            storage.set(courseID, course)
+        function saveCourse(courseID, updatedProgress) {
+            const courses = storage.get("startedCourses") || [];
+            const index = courses.findIndex(c => c.id === courseID);
+            if (index !== -1) {
+                courses[index] = updatedProgress;
+            } else {
+                courses.push(updatedProgress);
+            }
+            storage.set("startedCourses", courses);
         };
 
         function getCourseID() {
@@ -100,51 +129,43 @@
             return allCourses.find(course => course.id === courseID);
         }
 
-        // function chiffrera(char) {
-        //     const mod = "Z".charCodeAt(0) - "A".charCodeAt(0) + 1;
-        //     const key = 13;
-        //     index = char.toUpperCase().charCodeAt(0) - "A".charCodeAt(0);
-        //     const newIndex = (index + key) % mod + "A".charCodeAt("0");
-        //     newChar = String.fromCharCode(newIndex);
-        //     console.log(mod, char, index, newChar, newIndex);
-        //     return newChar
-        // }
+        function renderGrid(course, progress) {
 
-        // function dechiffrera(char) {
-        //     return chiffrera(char)
-        // }
-
-        // chiffrera("A");
-        // chiffrera("Z");
-        // dechiffrera("N");
-        // dechiffrera("M");
-
-        // async function getKeys() {
-        //     const response = await fetch("data/keys.json");
-        //     const allKeys = await response.json();
-        //     console.log(allKeys[0].keys.find((element) => element[0] == 46))
-        //     return allKeys;
-        // }
-        // getKeys();
-        // console.log(dechiffrera("Y"))
-
-        async function init() {
-            const course = await getCourse(courseID);
-            if (!course) {
-                document.body.innerHTML = "<h1>Leden hittades inte!</h1>";
-                return;
-            }
-
-            if (course.numericalorder) {
-                course.controlpoints.sort((a, b) => a[0] - b[0]);
-            }
-
-            let courseProgress = loadCourse(courseID);
-
+            // Initialise grid and cells
             const grid = document.getElementById("controlGrid");
 
-            function renderGrid(course, progress) {
-                grid.innerHTML = "";
+            const startCell = document.createElement("div");
+            startCell.className = "box";
+            startCell.textContent = "Start";
+            grid.appendChild(startCell);
+
+            const finishCell = document.createElement("div");
+            finishCell.className = "box";
+            finishCell.textContent = "Mål";
+
+            // To start the course
+            if (!progress.started) {
+                startCell.classList.add("gray");
+                startCell.classList.add("editable");
+                startCell.addEventListener("click", () => {
+                    if (course.numericalorder) {
+                        progress.started = true;
+                        progress.startedAt = new Date();
+                        saveCourse(course.id, progress);
+                        location.reload();
+                    } else {
+                        selectedNumber = -1;
+                        popupLabel.textContent = "Start:";
+                        popupCode.value = "";
+                        popup.style.display = "block";
+                        popupCode.focus();
+                    }
+                });
+                // When started, make start cell green, add every control point and add gray finishcell.
+            } else {
+                startCell.classList.add("green");
+
+                finishCell.classList.add("gray");
 
                 let correct = 0;
                 let incorrect = 0;
@@ -153,32 +174,36 @@
                     const cell = document.createElement("div");
                     cell.className = "box";
 
-
                     if (course.numericalorder) {
                         var order = "";
                     } else {
-                        var order = i + ": "
+                        var order = i + ": ";
                     }
-                    const found = courseProgress.find(entry => entry.number === number);
+
+                    const found = progress.progress.find(cp => cp[0] === number);
+
                     if (found) {
-                        if (found.code.toLowerCase() === code.toLowerCase()) {
+                        if (found[1].toLowerCase() === code.toLowerCase()) {
                             cell.classList.add("green");
                             correct++;
                             cell.textContent = order + number + " - " + code.toUpperCase();
                         } else {
                             cell.classList.add("red");
+                            cell.classList.add("editable");
                             incorrect++;
                             cell.textContent = order + number;
                         }
                     } else {
                         cell.classList.add("gray");
+                        cell.classList.add("editable");
                         cell.textContent = order + number;
                     }
+
                     if (!cell.classList.contains("green")) {
                         cell.addEventListener("click", () => {
                             selectedNumber = number;
                             popupLabel.textContent = `Kontroll ${number}:`;
-                            popupCode.value = found ? found.code : "";
+                            popupCode.value = found ? found[1] : "";
                             popup.style.display = "block";
                             popupCode.focus();
                         });
@@ -188,11 +213,53 @@
                     grid.appendChild(cell);
                 });
 
-                document.getElementById("nameOfCourse").textContent = " - " + course.name;
+                // If all control points are found and are correct, make finish cell editable.
+                if (!progress.finished && correct === course.controlpoints.length) {
+                    finishCell.classList.add("editable");
+                    finishCell.addEventListener("click", () => {
+                        if (course.numericalorder) {
+                            progress.finished = true;
+                            progress.finishedAt = new Date();
+                            saveCourse(course.id, progress);
+                            location.reload();
+                        } else {
+                            selectedNumber = -2;
+                            popupLabel.textContent = "Mål:";
+                            popupCode.value = "";
+                            popup.style.display = "block";
+                            popupCode.focus();
+                        }
+                    });
+                }
+
+                grid.appendChild(finishCell);
+
                 document.getElementById("correctCount").textContent = correct;
                 document.getElementById("incorrectCount").textContent = incorrect;
                 document.getElementById("notFoundCount").textContent = course.controlpoints.length - correct - incorrect;
             };
+
+            // If everything is complete, make finish cell green.
+            if (progress.started && progress.finished) {
+                finishCell.className = "box green";
+            }
+        }
+
+        async function init() {
+            const courseID = getCourseID();
+            const course = await getCourse(courseID);
+            document.getElementById("nameOfCourse").textContent = course.name;
+
+            if (!course) {
+                document.body.innerHTML = "<h1>Leden hittades inte!</h1>";
+                return;
+            }
+
+            if (course.numericalorder) {
+                course.controlpoints.sort((a, b) => a[0] - b[0]);
+            }
+
+            let courseProgress = loadProgress(courseID);
 
             renderGrid(course, courseProgress);
 
@@ -201,8 +268,6 @@
             const popupCode = document.getElementById("popupCode");
             const popupSubmit = document.getElementById("popupSubmit");
             const popupCancel = document.getElementById("popupCancel");
-
-            let selectedNumber = null;
 
             popupCancel.addEventListener("click", () => {
                 popup.style.display = "none";
@@ -214,35 +279,76 @@
                 if (selectedNumber === null) return;
 
                 const code = popupCode.value.trim();
+
                 if (!code) return;
 
-                courseProgress = courseProgress.filter(entry => entry.number !== selectedNumber);
-                courseProgress.push({ number: selectedNumber, code });
-
+                if (selectedNumber === -1) {
+                    if (code.toLowerCase() === "x") {
+                        courseProgress.started = true;
+                        courseProgress.startedAt = new Date();
+                    }
+                } else if (selectedNumber === -2) {
+                    if (code.toLowerCase() === "x") {
+                        courseProgress.finished = true;
+                        courseProgress.finishedAt = new Date();
+                    }
+                } else {
+                    courseProgress.progress = courseProgress.progress.filter(cp => cp[0] !== selectedNumber);
+                    courseProgress.progress.push([selectedNumber, code]);
+                }
                 saveCourse(courseID, courseProgress);
-                renderGrid(course, courseProgress);
 
                 popup.style.display = "none";
                 popupCode.value = "";
                 selectedNumber = null;
                 location.reload();
+
             });
 
             const infoTable = document.getElementById("courseInfo").querySelector("tbody");
             infoTable.innerHTML = `
-                <tr><td><b>Beskrivning</b></td><td>${course.desc || "-"}</td></tr>
-                <tr><td><b>Längd</b></td><td>${course.length || "-"}</td></tr>
-                <tr><td><b>Antal kontroller</b></td><td>${course.controlpoints.length}</td></tr>
+                <tr><td><b>Beskrivning:</b></td><td>${course.desc || "-"}</td></tr>
+                <tr><td><b>Längd:</b></td><td>${course.length || "-"}</td></tr>
+                <tr><td><b>Kontroller:</b></td><td>${course.controlpoints.length}</td></tr>
                 `;
 
+            if (courseProgress.started && !courseProgress.finished) {
+                infoTable.innerHTML += `
+                    <tr><td><b>Start:</b></td><td>${new Date(courseProgress.startedAt).toLocaleString("sv-SE")}</td></tr>
+                    <tr><td><b>Tid:</b></td><td>${getDuration(courseProgress.startedAt, new Date()).toString()}</td></tr>
+                `;
+            }
+            if (courseProgress.started && courseProgress.finished) {
+                infoTable.innerHTML += `
+                    <tr><td><b>Start:</b></td><td>${new Date(courseProgress.startedAt).toLocaleString("sv-SE")}</td></tr>
+                    <tr><td><b>Mål:</b></td><td>${new Date(courseProgress.finishedAt).toLocaleString("sv-SE")}</td></tr>
+                    <tr><td><b>Tid:</b></td><td>${getDuration(courseProgress.startedAt, courseProgress.finishedAt).toString()}</td></tr>
+                `;
+            }
+
             const clearButton = document.getElementById("clearButton");
-            if (!simpleStorage.hasKey(courseID)) {
+            if (!courseProgress.started) {
                 clearButton.style.display = "none";
             }
+
             clearButton.addEventListener("click", function () {
                 const confirmed = confirm("Är du säker att du vill nollställa den här leden och börja om? Alla dina svar kommer raderas.")
                 if (confirmed) {
-                    simpleStorage.deleteKey(courseID);
+                    const startedCourses = simpleStorage.get("startedCourses") || [];
+                    const updatedCourses = startedCourses.map(course => {
+                        if (course.id === courseID) {
+                            return {
+                                ...course,
+                                progress: [],
+                                started: false,
+                                startedAt: null,
+                                finished: false,
+                                finishedAt: null
+                            };
+                        }
+                        return course;
+                    });
+                    simpleStorage.set("startedCourses", updatedCourses);
                     location.reload();
                 }
             });
@@ -251,15 +357,13 @@
             deleteButton.addEventListener("click", function () {
                 const confirmed = confirm("Är du säker att du vill radera den här leden? Alla dina svar kommer raderas och leden plockas bort.")
                 if (confirmed) {
-                    simpleStorage.deleteKey(courseID);
-
                     const startedCourses = simpleStorage.get("startedCourses") || [];
                     const updatedCourses = startedCourses.filter(course => course.id !== courseID);
                     simpleStorage.set("startedCourses", updatedCourses);
 
                     window.location.href = "./index.html";
                 }
-            })
+            });
         }
 
         init();
