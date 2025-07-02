@@ -29,58 +29,67 @@
                 en
                 röd och vit cylinder. Varje kontroll har ett identifieringsnummer och en kodbokstav.
             </p>
-            <p>
-                På Lillgårn kan du:
-            </p>
+        </div>
+    </div>
 
+    <div>
+        <details>
+            <summary>
+                På lillgårn kan du:
+            </summary>
             <ul>
                 <li>Låna eller köpa kartor.</li>
                 <li>Låna kompasser, kontrollbeskrivningar och analoga startkort.</li>
                 <li>Få mer information!</li>
             </ul>
+        </details>
 
-            <p>
+        <details>
+            <summary>
                 Tips på programpass:
-            </p>
-
+            </summary>
             <ul>
-                <li><b>Orientering i grupp:</b> demonstration av ledare</li>
-                <li><b>Parorientering:</b> samarbeta eller tävla. Vem väljer bäst väg till nästa kontroll? Gula
-                    vägvalsbanan
-                    passar
-                    här!</li>
-                <li><b>Orientering på tid:</b> Använd startkortet för se hur lång tid du tar en led.</li>
-                <li><b>Orientering kring plats:</b> Hitta alla kontroller i närheten av ett område.</li>
-                <li><b>Nattorientering:</b> Alla kontroller är reflekterande. Kom ihåg ficklampan!</li>
-                <li><b>Naturpasset / Hitta Ut:</b> På ön finns 62 kontroller. Vem hinner hitta flest under lägertiden?
-                    Starta leden
-                    "Stora orienteringen" eller "Mellersta Vässarö".</li>
-                <li><b>Gör din egen led:</b> Låna en karta och välj kontroller själv.</li>
+                <li><b>Orientering i grupp:</b> 
+                    Demonstration av ledare</li>
+                <li><b>Parorientering:</b> 
+                    Samarbeta eller tävla. Vem väljer bäst väg till nästa kontroll? Gula vägvalsbanan passar här!</li>
+                <li><b>Orientering på tid:</b> 
+                    Använd startkortet för se hur lång tid du tar en led.</li>
+                <li><b>Orientering kring plats:</b> 
+                    Hitta alla kontroller i närheten av ett område.</li>
+                <li><b>Nattorientering:</b> 
+                    Alla kontroller är reflekterande. Kom ihåg ficklampan!</li>
+                <li><b>Naturpasset / Hitta Ut:</b> 
+                    På ön finns 62 kontroller. Vem hinner hitta flest under lägertiden?
+                    Starta leden "Stora orienteringen" eller "Mellersta Vässarö".</li>
+                <li><b>Gör din egen led:</b> 
+                    Låna en karta och välj kontroller själv.</li>
             </ul>
-        </div>
+        </details>
     </div>
 
     <div id="newCourseGrid">
-        <button id="startNewCourseButton" class="button" style="width: 200px ;margin-left: calc(100% - 200px);"><i
-                class="fa fa-solid fa-plus"></i>&nbsp;Starta ny led</button>
+        <button id="startNewCourseButton" class="button" style="width: 300px ;margin-left: calc(100% - 300px);"><i
+                class="fa fa-solid fa-plus"></i>&nbsp;Lägg till nytt startkort</button>
         <div id="newCourse">
             <!-- Välj en led att starta: -->
             <div id="availableCourses" class="slidePanel"></div>
         </div>
     </div>
 
-    <h2>Här listas dina orienteringsleder:</h2>
+    <h2>Mina startkort:</h2>
     <div id="courseGrid"></div>
 
-    <p style="display: flex; flex-direction: row; align-items: center; justify-content: center; background-color: var(--scoutblue); margin: 0px; padding: 20px; vertical-align: middle; ">
+    <p
+        style="display: flex; flex-direction: row; align-items: center; justify-content: center; background-color: var(--scoutblue); margin: 0px; padding: 20px; vertical-align: middle; ">
         <img src="img/Scoutsymbolen_white.png" alt="Scouternas logga." height="75px"
             style="margin-right: 4px; position: relative; top: 6px;">&nbsp;
-        <img src="img/hollyrosa.svg" alt="Hollyrosa, programpatrullens maskot." height="100px"
-            style="margin-right: 4px; position: relative; top: 6px; -webkit-filter: invert(0.75); filter: invert(0.75)">&nbsp;
-        <img src="img/vassaro.svg" alt="Vässarös logga." height="100px"
-            style="margin-right: 4px; position: relative; top: 6px; -webkit-filter: invert(0.75); filter: invert(0.75)">&nbsp;
-        <a href="https://github.com/danielmartling/vook/" title="Du kan hjälpa till med den här hemsidan!"><i class="fa fa-solid fa-github"
-            style="font-size: xx-large; color: white;"></i></a>
+        <img src="img/hollyrosa2_inv.png" alt="Hollyrosa, programpatrullens maskot." height="100px"
+            style="margin-right: 4px; position: relative; top: 6px; ">&nbsp;
+        <img src="img/vassaro_logga_inv.png" alt="Vässarös logga." height="100px"
+            style="margin-right: 4px; position: relative; top: 6px;">&nbsp;
+        <a href="https://github.com/danielmartling/vook/" title="Du kan hjälpa till med den här hemsidan!"><i
+                class="fa fa-solid fa-github" style="font-size: xx-large; color: white;"></i></a>
     </p>
 
     <script>
@@ -193,7 +202,7 @@
             newCourseDiv.style.display = isVisible ? "none" : "block";
 
             document.getElementById("startNewCourseButton").innerHTML = isVisible
-                ? '<i class="fa fa-solid fa-plus"></i>&nbsp;Starta ny led'
+                ? '<i class="fa fa-solid fa-plus"></i>&nbsp;Lägg till nytt startkort'
                 : '<i class="fa fa-solid fa-times"></i>&nbsp;Stäng';
 
             if (isVisible) return;
