@@ -41,8 +41,32 @@ p {
     padding-bottom: 0px;
 }
 
+details {
+    background-color: var(--scoutblue);
+    font-weight: normal;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+summary {
+    color: white;
+    background-color: var(--white);
+    font-weight: bold;
+    padding-left: 10px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
 ul {
-    margin-top: 0px;
+    margin: 0px;
+    background-color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 10px;
+    padding-left: 20px;
 }
 
 
@@ -199,7 +223,6 @@ td {
     border: 1px solid black;
     border-radius: 5px;
 }
-
 #courseInfo {
     margin: 10px;
     font-size: 1.0em;
@@ -210,8 +233,14 @@ td {
     background-image: url("img/svan.png");
     background-size: cover;
     background-position: center;
-    height: 800px;
+    height: 400px;
     overflow: hidden;
+}
+
+@media screen and (orientation: landscape) {
+    .imageBox {
+        height: 200px;
+    }
 }
 
 .textBox {
@@ -226,3 +255,30 @@ td {
 }
 
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+details>summary {
+    list-style-type: none;
+    /* This removes the default arrow */
+    cursor: pointer;
+    position: relative;
+    margin-left: 24px;
+}
+
+details>summary:before,
+details[open]>summary:before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 36px;
+    left: -21px;
+    top: 12px;
+    background-image: url("img/hollyrosa2_inv.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    transition: .2s;
+}
+
+details[open]>summary:before {
+    transform: rotate(90deg);
+}
