@@ -6,6 +6,7 @@
         "visible": true,
         "length": "- km",
         "numericalorder": true,
+        "startfinish": false,
         "controlpoints": [
             31,
             32,
@@ -78,6 +79,7 @@
         "desc": "Mestadels på vägar och stigar på mellersta Vässarö.",
         "length": "2.0 km",
         "numericalorder": false,
+        "startfinish": true,
         "controlpoints": [
             35,
             32,
@@ -96,6 +98,7 @@
         "visible": true,
         "length": "2.5 km",
         "numericalorder": false,
+        "startfinish": true,
         "controlpoints": [
             46,
             32,
@@ -113,6 +116,7 @@
         "visible": true,
         "length": "5.1 km",
         "numericalorder": false,
+        "startfinish": true,
         "controlpoints": [
             62,
             50,
@@ -137,6 +141,7 @@
         "visible": true,
         "length": "1.7 km",
         "numericalorder": false,
+        "startfinish": true,
         "controlpoints": [
             36,
             57,
@@ -155,6 +160,7 @@
         "visible": true,
         "length": "1.4 km",
         "numericalorder": false,
+        "startfinish": true,
         "controlpoints": [
             31,
             38,
@@ -171,6 +177,7 @@
         "visible": true,
         "length": "3.5 km",
         "numericalorder": false,
+        "startfinish": true,
         "controlpoints": [
             49,
             54,
@@ -193,6 +200,7 @@
         "visible": true,
         "length": "- km",
         "numericalorder": true,
+        "startfinish": false,
         "controlpoints": [
             60,
             59,
@@ -215,6 +223,7 @@
         "visible": true,
         "length": "- km",
         "numericalorder": true,
+        "startfinish": false,
         "controlpoints": [
             37,
             48,
@@ -259,10 +268,11 @@
     {
         "id": "vorunt",
         "name": "Vässarö Runt",
-        "desc": "Alla orienteringskontroller längs med eller strax bredvid vandringsstigen 'Vässarö Runt'. Stigen är markerad med orange. Start Lillgårn, sedan går leden moturs runt hela ön från Skrakviksängen, och till sist mål på Lillgårn.",
+        "desc": "Alla orienteringskontroller längs med eller strax bredvid vandringsstigen 'Vässarö Runt'. Stigen är markerad med orange. Du kan börja var du vill och ta kontrollerna i den ordningen du vill, men startkortet börjar vid kontrollen längst ut på Skrakviksängen och fortsätter sen moturs runt ön.",
         "visible": true,
         "length": "ca. 8 km",
         "numericalorder": false,
+        "startfinish": false,
         "controlpoints": [
             34,
             69,
@@ -286,6 +296,54 @@
             37,
             53,
             39
+        ]
+    },
+    {
+        "id": "orange",
+        "name": "Orange led",
+        "desc": "Mellersta Vässarö.",
+        "visible": true,
+        "length": "? km",
+        "numericalorder": false,
+        "startfinish": true,
+        "controlpoints": [
+            49,
+            54,
+            42,
+            51,
+            52,
+            67,
+            47,
+            55,
+            56,
+            53,
+            50,
+            62
+        ]
+    },
+    {
+        "id": "violet",
+        "name": "Violett led",
+        "desc": "Mellersta Vässarö.",
+        "visible": true,
+        "length": "? km",
+        "numericalorder": false,
+        "startfinish": true,
+        "controlpoints": [
+            62,
+            50,
+            69,
+            54,
+            65,
+            63,
+            64,
+            67,
+            55,
+            56,
+            52,
+            51,
+            42,
+            49
         ]
     }
 ]

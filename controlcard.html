@@ -92,16 +92,14 @@
         Danger zone
     </h2>
 
-    <p style="text-align: center;">
+    <div style="display: flex; padding: 20px; gap: 20px;">
         <button class="button" id="clearButton">
             <i class="fa fa-solid fa-rotate-left"></i>&nbsp;Nollställ leden
         </button>
-    </p>
-    <p style="text-align: center;">
         <button id="deleteButton">
             <i class="fa fa-solid fa-trash"></i>&nbsp;Radera leden
         </button>
-    </p>
+    </div>
 
     <p
         style="display: flex; flex-direction: row; align-items: center; justify-content: center; background-color: var(--scoutblue); margin: 0px; padding: 20px; vertical-align: middle; ">
@@ -165,17 +163,17 @@
                 startCell.classList.add("gray");
                 startCell.classList.add("editable");
                 startCell.addEventListener("click", () => {
-                    if (course.numericalorder) {
-                        progress.started = true;
-                        progress.startedAt = new Date();
-                        saveCourse(course.id, progress);
-                        location.reload();
-                    } else {
+                    if (course.startfinish) {
                         selectedNumber = -1;
                         popupLabel.textContent = "Start:";
                         popupCode.value = "";
                         popup.style.display = "block";
                         popupCode.focus();
+                    } else {
+                        progress.started = true;
+                        progress.startedAt = new Date();
+                        saveCourse(course.id, progress);
+                        location.reload();
                     }
                 });
                 // When started, make start cell green, add every control point and add gray finishcell.
@@ -196,7 +194,7 @@
                         var order = "";
                     } else {
                         var order = i + ": ";
-                    }
+                    };
 
                     const found = progress.progress.find(cp => cp[0] === number);
                     const key = decode(getKey(keys, number));
@@ -236,18 +234,18 @@
                 if (!progress.finished && correct === course.controlpoints.length) {
                     finishCell.classList.add("editable");
                     finishCell.addEventListener("click", () => {
-                        if (course.numericalorder) {
-                            progress.finished = true;
-                            progress.finishedAt = new Date();
-                            saveCourse(course.id, progress);
-                            location.reload();
-                        } else {
+                        if (course.startfinish) {
                             selectedNumber = -2;
                             popupLabel.textContent = "Mål:";
                             popupCode.value = "";
                             popup.style.display = "block";
                             popupCode.focus();
-                        }
+                        } else {
+                            progress.finished = true;
+                            progress.finishedAt = new Date();
+                            saveCourse(course.id, progress);
+                            location.reload();
+                        };
                     });
                 }
 
@@ -275,7 +273,8 @@
             }
 
             if (course.numericalorder) {
-                course.controlpoints.sort((a, b) => a[0] - b[0]);
+                console.log(course.controlpoints)
+                course.controlpoints.sort((a, b) => a - b);
             }
 
             let courseProgress = loadProgress(courseID);
