@@ -283,3 +283,8 @@ details[open]>summary:before {
 details[open]>summary:before {
     transform: rotate(90deg);
 }
+
+#pdfObject {
+    height: calc(100vh - 42px);
+    width: 100vw;
+}
