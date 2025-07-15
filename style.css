@@ -288,10 +288,7 @@ details[open]>summary:before {
 #pdfObject {
     height: calc(100vh - 42px);
     width: 100vw;
-}
-
-@media screen {
-    #pdfObject {
+    @media screen and (max-width: 600px) {
         height: 100%;
         width: 100%;
     }
