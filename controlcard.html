@@ -21,11 +21,15 @@
 
 
     <p>
-        <a href="./"><i class="fa fa-solid fa-arrow-left"></i>&nbsp;Återvänd till startsidan</a>
+        <a href="./"><i class="fa fa-solid fa-arrow-left" style="vertical-align: middle;"></i>&nbsp;Återvänd till
+            startsidan</a>
     </p>
 
     <h2><span id="nameOfCourse"></span></h2>
 
+    <p style="padding-left: 10px;"><button class="button" id="goToMap" onclick="navigate()">
+            <i class="fa fa-solid fa-map"></i>&nbsp;Till kartan
+        </button></p>
 
     <p>
         Registrera kontroller:
@@ -144,16 +148,7 @@
             storage.set("startedCourses", courses);
         };
 
-        function getCourseID() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get("id");
-        }
 
-        async function getCourse(courseID) {
-            const response = await fetch("data/courses.json");
-            const allCourses = await response.json();
-            return allCourses.find(course => course.id === courseID);
-        }
 
 
 
@@ -395,6 +390,12 @@
                     window.location.href = "./index.html";
                 }
             });
+        }
+
+        function navigate() {
+            const id = getCourseID();
+            const target = "./map.html?id=" + id;
+            window.location.href = target;
         }
 
         init();

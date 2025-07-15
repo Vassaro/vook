@@ -40,3 +40,21 @@ async function getKeys() {
 function getKey(keys, number) {
     return keys.find(cp => cp[0] === number)[1];
 }
+
+function getCourseID() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("id");
+}
+
+async function getCourse(courseID) {
+    const response = await fetch("data/courses.json");
+    const allCourses = await response.json();
+    return allCourses.find(course => course.id === courseID);
+}
+
+function UrlExists(url) {
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+    return http.status != 404;
+}

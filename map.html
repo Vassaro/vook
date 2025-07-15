@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Karta</title>
+    <link rel="icon" type="image/x-icon" href="img/hollyrosa-square.png">
+    <meta charset="utf-8" />
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/simplestorage.js@0.2.1/simpleStorage.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="style.css">
+    <script src="scripts.js"></script>
+</head>
+
+<body>
+    <p>
+        <a id="backButton" href="./"><i class="fa fa-solid fa-arrow-left"></i>&nbsp;Återvänd till startkortet</a>
+    </p>
+
+    <div style="height: calc(100vh - 42px);"><embed id="pdfObject" width="100%" height="100%"></div>
+</body>
+
+<script>
+    pdfContainer = document.getElementById("pdfObject");
+    backButton = document.getElementById("backButton");
+
+    const courseID = getCourseID();
+    if (courseID) {
+        backButton.href = "./controlcard.html?id=" + courseID;
+        const dir = "kartor/" + courseID + ".pdf";
+        if (UrlExists(dir)) {
+            pdfContainer.src = dir;
+        } else {
+            pdfContainer.src = "kartor/all.pdf"
+        }
+    }
+</script>
+
+</html>
