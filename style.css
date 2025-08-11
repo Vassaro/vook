@@ -72,9 +72,11 @@ ul {
 
 
 #newCourseGrid,
-#courseGrid {
-    padding: 20px;
+#courseGrid,
+#availableCourses {
+    padding: 0px;
     padding-left: 20px;
+    padding-right: 20px;
     background-color: var(--scoutblue);
 }
 
@@ -286,7 +288,7 @@ details[open]>summary:before {
 }
 
 #pdfObject {
-    height: calc(100vh - 42px);
+    height: calc(100vh - 42px - 42px);
     width: 100vw;
     @media screen and (max-width: 600px) {
         height: 100%;

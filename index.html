@@ -6,7 +6,7 @@
     <link rel="icon" type="image/x-icon" href="img/hollyrosa-square.png">
     <meta charset="utf-8" />
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/c7032de331.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/simplestorage.js@0.2.1/simpleStorage.min.js"></script>
 
@@ -15,7 +15,7 @@
     <script src="scripts.js"></script>
 </head>
 
-<body>
+<body style="background-color: var(--scoutblue);">
 
     <h1>
         <i class="fa fa-solid fa-compass"></i>&nbsp;Vässarö Orientering
@@ -24,7 +24,10 @@
     <div class="imageBox">
         <div class="textBox">
             <p>
-                På ön finns det 62 orienteringskontroller och 8 leder i olika svårighetsgrader. Kontrollerna är utmärkta med stolpe med röda och vita reflexer. Varje kontroll har ett identifieringsnummer och en kodbokstav. Öppna ett startkort nedan och börja fylla på med kontroller. Startkortet håller koll på tiden och du kan öppna ledens karta.
+                På ön finns det 62 orienteringskontroller och 8 leder i olika svårighetsgrader. Kontrollerna består av
+                en stolpe med röda och vita reflexer. Varje kontroll har ett identifieringsnummer och en kodbokstav.
+                Öppna ett startkort nedan och börja fylla på med kontroller. Startkortet håller koll på tiden och du kan
+                öppna ledens karta.
             </p>
         </div>
     </div>
@@ -32,7 +35,7 @@
     <div>
         <details>
             <summary>
-                På lillgårn kan du
+                På lillgårn kan du...
             </summary>
             <ul>
                 <li>Låna eller köpa kartor.</li>
@@ -43,35 +46,36 @@
 
         <details>
             <summary>
-                Tips på programpass
+                Tips på programpass...
             </summary>
             <ul>
-                <li><b>Orientering i grupp:</b> 
+                <li><b>Orientering i grupp:</b>
                     Demonstration av ledare</li>
-                <li><b>Parorientering:</b> 
+                <li><b>Parorientering:</b>
                     Samarbeta eller tävla. Vem väljer bäst väg till nästa kontroll? Gula vägvalsbanan passar här!</li>
-                <li><b>Orientering på tid:</b> 
+                <li><b>Orientering på tid:</b>
                     Använd startkortet för se hur lång tid du tar en led.</li>
-                <li><b>Orientering kring plats:</b> 
+                <li><b>Orientering kring plats:</b>
                     Hitta alla kontroller i närheten av ett område.</li>
-                <li><b>Nattorientering:</b> 
+                <li><b>Nattorientering:</b>
                     Alla kontroller är reflekterande. Kom ihåg ficklampan!</li>
-                <li><b>Naturpasset / Hitta Ut / Rogaining:</b> 
+                <li><b>Naturpasset / Hitta Ut / Rogaining:</b>
                     På ön finns 62 kontroller. Vem hinner hitta flest under lägertiden?
                     Starta leden "Stora orienteringen" eller "Mellersta Vässarö".</li>
-                <li><b>Gör din egen led:</b> 
+                <li><b>Gör din egen led:</b>
                     Låna en karta och välj kontroller själv.</li>
             </ul>
         </details>
     </div>
 
     <div id="newCourseGrid">
-        <button id="startNewCourseButton" class="button" style="width: 300px ;margin-left: calc(100% - 300px);"><i
-                class="fa fa-solid fa-plus"></i>&nbsp;Lägg till nytt startkort</button>
-        <div id="newCourse">
-            <!-- Välj en led att starta: -->
-            <div id="availableCourses" class="slidePanel"></div>
-        </div>
+        <button class="button" onclick="window.location=`map.html?id=map`"><i class="fa fa-solid fa-map"></i>&nbsp;Till karta</button>
+        <button id="startNewCourseButton" class="button"><i class="fa fa-solid fa-plus"></i>&nbsp;Nytt startkort</button>
+    </div>
+
+    <div id="newCourse">
+        <!-- Välj en led att starta: -->
+        <div id="availableCourses" class="slidePanel"></div>
     </div>
 
     <h2>Mina startkort:</h2>
@@ -199,7 +203,7 @@
             newCourseDiv.style.display = isVisible ? "none" : "block";
 
             document.getElementById("startNewCourseButton").innerHTML = isVisible
-                ? '<i class="fa fa-solid fa-plus"></i>&nbsp;Lägg till nytt startkort'
+                ? '<i class="fa fa-solid fa-plus"></i>&nbsp;Nytt startkort'
                 : '<i class="fa fa-solid fa-times"></i>&nbsp;Stäng';
 
             if (isVisible) return;

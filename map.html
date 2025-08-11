@@ -6,7 +6,7 @@
     <link rel="icon" type="image/x-icon" href="img/hollyrosa-square.png">
     <meta charset="utf-8" />
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/c7032de331.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/simplestorage.js@0.2.1/simpleStorage.min.js"></script>
 
@@ -17,31 +17,34 @@
 
 <body>
     <p>
-        <a id="backButton" href="./"><i class="fa fa-solid fa-arrow-left"></i>&nbsp;Återvänd till startkortet</a>
+        <a href="./">Hem</a> <a style="display: none;" id="backButton">/ Startkort</a> / Karta
     </p>
-    <!-- <embed id="pdfObject" width="100%" height="100%"> -->
-    <!-- <embed id="pdfObject"> -->
-    <object id="pdfObject" type="application/pdf">
-    <!-- <p>It appears you don't have a PDF plugin for this browser.
-    No biggie... you can <a href="myfile.pdf">click here to
-    download the PDF file.</a></p> -->
-</object>
+    
+    <object id="pdfObject" type="application/pdf"></object>
 
-    <!-- <div style="height: calc(100vh - 42px);"></div> -->
+    <p>
+        För vissa verkar PDF-läsaren inte funkar så bra... Ingen fara, <a id="mapLink">klicka här istället</a>!
+    </p>
 </body>
 
 <script>
     pdfContainer = document.getElementById("pdfObject");
     backButton = document.getElementById("backButton");
+    mapLink = document.getElementById("mapLink");
 
     const courseID = getCourseID();
     if (courseID) {
+        if (courseID !== "map") {
+            backButton.style.display = "";
+        }
         backButton.href = "./controlcard.html?id=" + courseID;
         const dir = "kartor/" + courseID + ".pdf";
         if (UrlExists(dir)) {
             pdfContainer.data = dir;
+            mapLink.href = dir;
         } else {
-            pdfContainer.data = "kartor/all.pdf"
+            pdfContainer.data = "kartor/all.pdf";
+            mapLink.href = "kartor/all.pdf";
         }
     }
 </script>
